@@ -1,1 +1,175 @@
 @import "tailwindcss";
+@import "@fontsource-variable/plus-jakarta-sans/wght.css";
+@import "@fontsource/cormorant-garamond/500.css";
+@import "@fontsource/cormorant-garamond/600.css";
+@import "@fontsource/cormorant-garamond/500-italic.css";
+@import "lenis/dist/lenis.css";
+
+@theme {
+  --color-gold-300: #e3c878;
+  --color-gold-500: #c2952e;
+  --color-gold-600: #a67c1e;
+  --color-paddy-500: #3f8f4f;
+  --color-paddy-700: #1f4d2b;
+  --color-paddy-900: #12301c;
+  --color-ivory: #faf7ef;
+  --color-ink: #23221f;
+
+  --font-sans: "Plus Jakarta Sans Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Cormorant Garamond", Georgia, serif;
+
+  --ease-brand: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  html {
+    scroll-padding-top: 6rem;
+  }
+
+  body {
+    @apply bg-white font-sans text-ink antialiased;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-gold-500;
+  }
+
+  /* sections are opaque and positioned so they always paint over a stuck data-stack section */
+  main > section {
+    @apply relative bg-white;
+    /* reveal animations start off to one side; keep them from widening the page */
+    overflow-x: clip;
+  }
+
+  ::selection {
+    @apply bg-gold-500 text-paddy-900;
+  }
+}
+
+@utility container-site {
+  @apply mx-auto w-full max-w-7xl px-5 sm:px-8;
+}
+
+/* Form controls */
+@utility field {
+  @apply w-full rounded border border-paddy-900/20 bg-white px-4 py-3 text-base text-ink transition-colors duration-300 placeholder:text-ink/40 focus:border-gold-500 focus:outline-none focus:ring-2 focus:ring-gold-500/30;
+}
+
+@utility field-label {
+  @apply mb-2 block text-sm font-semibold text-paddy-900;
+}
+
+/* Diagonal-cut colour panel used by the hero and page banners */
+@utility panel-angled {
+  clip-path: polygon(0 0, 100% 0, 80% 100%, 0 100%);
+}
+
+/* Gold underline that draws in on hover */
+@utility link-draw {
+  background: linear-gradient(currentColor, currentColor) 0 100% / 0 1.5px no-repeat;
+  transition: background-size 0.4s var(--ease-brand);
+
+  &:hover,
+  &[aria-current="page"] {
+    background-size: 100% 1.5px;
+  }
+}
+
+/* Stacked tiles: a section marked data-stack sticks in place while the next section slides
+   up over it like a tile. src/scripts/motion.ts sets `top` and shrinks the covered section.
+   Left unlayered on purpose so it wins over the sections' own `relative` utility. */
+@media (prefers-reduced-motion: no-preference) {
+  main {
+    background-color: var(--color-paddy-900);
+  }
+
+  main > section[data-stack] {
+    position: sticky;
+    top: 0;
+    transform-origin: center bottom;
+    will-change: transform;
+  }
+
+  /* dark veil over the covered section; opacity itself can't be used or lower tiles show through */
+  main > section[data-stack]::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 40;
+    border-radius: inherit;
+    background-color: var(--color-paddy-900);
+    opacity: var(--stack-dim, 0);
+    pointer-events: none;
+  }
+
+  /* the covering tile (a component's <script> may sit between the two sections) */
+  main > section[data-stack] + section,
+  main > section[data-stack] + script + section {
+    border-radius: 1.75rem 1.75rem 0 0;
+    box-shadow: 0 -24px 48px -12px rgb(0 0 0 / 0.35);
+  }
+}
+
+/* Scroll-reveal start states. src/scripts/motion.ts animates these in.
+   Only hidden when motion is allowed, so reduced-motion users see everything at once. */
+@media (prefers-reduced-motion: no-preference) {
+  [data-reveal],
+  [data-stagger] > * {
+    opacity: 0;
+  }
+
+  /* SVG lines that draw themselves in; the path needs pathLength="1" */
+  [data-draw] {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+  }
+}
+
+@utility marquee {
+  animation: marquee 40s linear infinite;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes ken-burns {
+  from {
+    transform: scale(1);
+  }
+
+  to {
+    transform: scale(1.1);
+  }
+}
+
+/* Page-to-page transition */
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-old(root) {
+    animation: 0.3s var(--ease-brand) both page-out;
+  }
+
+  ::view-transition-new(root) {
+    animation: 0.5s var(--ease-brand) 0.1s both page-in;
+  }
+}
+
+@keyframes page-out {
+  to {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+}
+
+@keyframes page-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}

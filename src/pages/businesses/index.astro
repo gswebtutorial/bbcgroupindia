@@ -1,0 +1,79 @@
+---
+import { Image } from 'astro:assets';
+import banner from '../../assets/images/hero-paddy.jpg';
+import Button from '../../components/ui/Button.astro';
+import PageBanner from '../../components/ui/PageBanner.astro';
+import SectionHeading from '../../components/ui/SectionHeading.astro';
+import { businesses } from '../../data/businesses';
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout
+  title="Our Businesses"
+  description="The businesses of BBC Group India: agriculture, rice and food processing, renewable energy, brick manufacturing, building construction supplies and agricultural machinery."
+  overlayHeader
+>
+  <PageBanner
+    title="Our Businesses"
+    text="Strength Across Industries. Value for Generations."
+    image={banner}
+    crumbs={[{ label: 'Our Businesses' }]}
+  />
+
+  <section class="bg-ivory py-20 lg:py-24">
+    <div class="container-site grid gap-6 lg:grid-cols-2 lg:gap-20">
+      <SectionHeading eyebrow="What we do" title="A Diversified Group. One Vision." />
+      <div class="space-y-5 text-lg leading-relaxed text-ink/80" data-stagger>
+        <p>BBC Group India brings together businesses operating across multiple sectors of the Indian economy.</p>
+        <p>
+          Our businesses are connected by a common commitment to operational excellence, reliability and sustainable
+          growth.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-20 lg:py-28">
+    <div class="container-site space-y-20 lg:space-y-28">
+      {
+        businesses.map((business, i) => (
+          <article class="grid items-center gap-10 lg:grid-cols-2 lg:gap-20">
+            <a
+              href={`/businesses/${business.slug}`}
+              class:list={['group/row relative block', i % 2 === 1 && 'lg:order-2']}
+              data-reveal={i % 2 === 1 ? 'right' : 'left'}
+              aria-hidden="true"
+              tabindex="-1"
+            >
+              <div
+                class:list={[
+                  'absolute -bottom-4 h-2/3 w-2/3 border border-gold-500',
+                  i % 2 === 1 ? '-right-4' : '-left-4',
+                ]}
+              />
+              <div class="relative aspect-[3/2] overflow-hidden rounded">
+                <Image
+                  src={business.image}
+                  alt=""
+                  widths={[640, 960, 1200]}
+                  sizes="(min-width: 1024px) 46vw, 100vw"
+                  class="size-full object-cover transition-transform duration-[900ms] ease-brand group-hover/row:scale-105"
+                  transition:name={`business-${business.slug}`}
+                />
+              </div>
+            </a>
+            <div data-reveal>
+              <span class="font-serif text-6xl font-semibold leading-none text-gold-500/50">0{i + 1}</span>
+              <h2 class="mt-4 text-3xl font-semibold tracking-tight text-paddy-900">{business.title}</h2>
+              <p class="mt-2 font-serif text-xl italic text-gold-600">{business.tagline}</p>
+              <p class="mt-5 text-lg leading-relaxed text-ink/75">{business.summary}</p>
+              <div class="mt-8">
+                <Button href={`/businesses/${business.slug}`} variant="dark">{business.cta}</Button>
+              </div>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+</Layout>

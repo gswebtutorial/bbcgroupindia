@@ -1,0 +1,31 @@
+---
+import { Image } from 'astro:assets';
+import logoWhite from '../assets/brand/logo-white.png';
+import Button from '../components/ui/Button.astro';
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Page Not Found" overlayHeader>
+  <section class="relative flex min-h-svh items-center overflow-hidden bg-paddy-900 text-white">
+    <Image
+      src={logoWhite}
+      alt=""
+      width={640}
+      height={640}
+      class="pointer-events-none absolute -right-24 top-1/2 size-[640px] -translate-y-1/2 opacity-[0.06]"
+    />
+    <div class="container-site relative pb-20 pt-44">
+      <p class="font-serif text-8xl font-semibold leading-none text-gold-500" data-reveal>404</p>
+      <h1 class="mt-6 text-4xl font-semibold tracking-tight sm:text-5xl" data-reveal data-reveal-delay="0.1">
+        This page could not be found.
+      </h1>
+      <p class="mt-5 max-w-xl text-lg text-white/80" data-reveal data-reveal-delay="0.2">
+        The page may have moved, or the address may be mistyped.
+      </p>
+      <div class="mt-9 flex flex-wrap gap-4" data-reveal data-reveal-delay="0.3">
+        <Button href="/">Back to Home</Button>
+        <Button href="/businesses" variant="outline-light" arrow={false}>Our Businesses</Button>
+      </div>
+    </div>
+  </section>
+</Layout>

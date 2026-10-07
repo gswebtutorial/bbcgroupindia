@@ -1,0 +1,126 @@
+---
+import type { GetStaticPaths } from 'astro';
+import BusinessCard from '../../components/ui/BusinessCard.astro';
+import Button from '../../components/ui/Button.astro';
+import Icon from '../../components/ui/Icon.astro';
+import PageBanner from '../../components/ui/PageBanner.astro';
+import ProcessFlow from '../../components/ui/ProcessFlow.astro';
+import SectionHeading from '../../components/ui/SectionHeading.astro';
+import { businesses, type Business } from '../../data/businesses';
+import { site } from '../../data/site';
+import Layout from '../../layouts/Layout.astro';
+
+export const getStaticPaths = (() =>
+  businesses.map((business) => ({ params: { slug: business.slug }, props: { business } }))) satisfies GetStaticPaths;
+
+interface Props {
+  business: Business;
+}
+
+const { business } = Astro.props;
+const index = businesses.indexOf(business);
+// The next three businesses, wrapping round, so every page links onward
+const others = [1, 2, 3].map((offset) => businesses[(index + offset) % businesses.length]);
+---
+
+<Layout title={business.title} description={business.summary} overlayHeader>
+  <PageBanner
+    title={business.title}
+    text={business.tagline}
+    image={business.image}
+    crumbs={[{ label: 'Our Businesses', href: '/businesses' }, { label: business.title }]}
+    transitionName={`business-${business.slug}`}
+  />
+
+  <section class="py-20 lg:py-28">
+    <div class="container-site grid gap-12 lg:grid-cols-[1fr_380px] lg:gap-20">
+      <div>
+        <SectionHeading eyebrow="Overview" title="At a Glance" />
+        <div class="mt-8 space-y-5 text-lg leading-relaxed text-ink/80" data-stagger>
+          <p class="font-semibold text-paddy-900">{business.summary}</p>
+          {business.overview.map((paragraph) => <p>{paragraph}</p>)}
+        </div>
+      </div>
+
+      <aside class="self-start rounded border-t-2 border-gold-500 bg-ivory p-8 lg:sticky lg:top-32" data-reveal="right">
+        <h2 class="text-xl font-semibold text-paddy-900">Enquire about {business.title}</h2>
+        <p class="mt-2 text-ink/70">Speak to us about your requirement.</p>
+        <ul class="mt-6 space-y-4 text-sm">
+          <li class="font-semibold text-paddy-900">{site.contact.person}</li>
+          <li>
+            <a href={site.contact.phoneHref} class="flex items-center gap-3 hover:text-gold-600">
+              <Icon name="phone" class="size-4 text-gold-600" />
+              {site.contact.phoneDisplay}
+            </a>
+          </li>
+          <li>
+            <a href={`mailto:${site.contact.email}`} class="flex items-center gap-3 break-all hover:text-gold-600">
+              <Icon name="mail" class="size-4 shrink-0 text-gold-600" />
+              {site.contact.email}
+            </a>
+          </li>
+        </ul>
+        <Button href={`/contact?interest=${business.slug}`} variant="dark" class="mt-8 w-full justify-center">
+          Send an Enquiry
+        </Button>
+      </aside>
+    </div>
+  </section>
+
+  <section class="bg-ivory py-20 lg:py-28">
+    <div class="container-site">
+      <SectionHeading eyebrow="What we do" title="Our Activities" />
+      <ul
+        class:list={[
+          'mt-12 grid gap-6 sm:grid-cols-2',
+          business.whatWeDo.length === 4 ? 'lg:grid-cols-4' : 'lg:grid-cols-3',
+        ]}
+        data-stagger
+      >
+        {
+          business.whatWeDo.map((item) => (
+            <li class="group/item rounded border border-paddy-900/10 bg-white p-8 transition-[translate,box-shadow,border-color] duration-500 ease-brand hover:-translate-y-1.5 hover:border-gold-500 hover:shadow-xl">
+              <Icon name={item.icon} class="size-9 text-gold-600" />
+              <h3 class="mt-6 text-lg font-semibold text-paddy-900">{item.title}</h3>
+              <span class="mt-3 block h-0.5 w-10 bg-gold-500 transition-[width] duration-500 ease-brand group-hover/item:w-20" />
+              <p class="mt-4 leading-relaxed text-ink/70">{item.text}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  {
+    business.process && (
+      <section class="bg-paddy-900 py-20 text-white lg:py-28">
+        <div class="container-site">
+          <SectionHeading eyebrow="How it works" title="From Paddy to Packed Rice" tone="dark" />
+          <div class="mt-14">
+            <ProcessFlow steps={business.process} />
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <section class="py-20 lg:py-28">
+    <div class="container-site">
+      <div class="flex flex-wrap items-end justify-between gap-6">
+        <SectionHeading eyebrow="BBC Group India" title="Explore Our Other Businesses" />
+        <div data-reveal>
+          <Button href="/businesses" variant="outline">View All Businesses</Button>
+        </div>
+      </div>
+      <ul class="mt-12 grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3" data-stagger>
+        {
+          others.map((other) => (
+            <li>
+              <BusinessCard business={other} />
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</Layout>

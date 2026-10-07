@@ -1,0 +1,109 @@
+---
+// Wrapper for any form delivered by Web3Forms to the client's inbox.
+// Put the visible fields in the default slot; every field needs a `name`.
+import { site } from '../../data/site';
+import Icon from '../ui/Icon.astro';
+
+interface Props {
+  /** Email subject line the client sees */
+  subject: string;
+  submitLabel?: string;
+  successMessage?: string;
+}
+
+const {
+  subject,
+  submitLabel = 'Send Enquiry',
+  successMessage = 'Thank you. Your details have been sent and we will get back to you soon.',
+} = Astro.props;
+
+// Public by design: Web3Forms keys are meant to be used in client-side code
+const accessKey = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
+---
+
+<form
+  action="https://api.web3forms.com/submit"
+  method="POST"
+  class="space-y-6"
+  data-web3form
+  data-success={successMessage}
+  data-email={site.contact.email}
+>
+  <input type="hidden" name="access_key" value={accessKey} />
+  <input type="hidden" name="subject" value={subject} />
+  <input type="hidden" name="from_name" value={`${site.name} Website`} />
+  <input type="hidden" name="page" value={Astro.url.pathname} />
+  {/* used only when JavaScript is off; the script removes it before sending */}
+  <input type="hidden" name="redirect" value={new URL('/thank-you', Astro.site ?? Astro.url.origin).href} />
+  {/* honeypot: real visitors never see or tick this */}
+  <input type="checkbox" name="botcheck" class="hidden" tabindex="-1" autocomplete="off" />
+
+  <slot />
+
+  <label class="flex items-start gap-3 text-sm text-ink/75">
+    <input type="checkbox" name="consent" value="yes" required class="mt-1 size-4 accent-gold-600" />
+    <span>
+      I agree to be contacted about this enquiry. See our{' '}
+      <a href="/privacy-policy" class="font-semibold text-gold-600 underline">Privacy Policy</a>.
+    </span>
+  </label>
+
+  <div class="flex flex-wrap items-center gap-4">
+    <button
+      type="submit"
+      class="group/btn inline-flex cursor-pointer items-center gap-2 rounded bg-paddy-900 px-7 py-3.5 text-sm font-semibold tracking-wide text-white transition-colors duration-300 hover:bg-paddy-700 disabled:cursor-wait disabled:opacity-60"
+    >
+      <span data-label>{submitLabel}</span>
+      <Icon name="arrow-right" class="size-4 transition-transform duration-300 ease-brand group-hover/btn:translate-x-1" />
+    </button>
+    <p class="text-sm font-semibold" role="status" aria-live="polite" data-status></p>
+  </div>
+</form>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    document.querySelectorAll<HTMLFormElement>('form[data-web3form]').forEach((form) => {
+      const status = form.querySelector<HTMLElement>('[data-status]')!;
+      const button = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+      const label = form.querySelector<HTMLElement>('[data-label]')!;
+      const idleLabel = label.textContent;
+      const fallback = `Please email us at ${form.dataset.email}.`;
+
+      const show = (message: string, ok: boolean) => {
+        status.textContent = message;
+        status.className = `text-sm font-semibold ${ok ? 'text-paddy-500' : 'text-red-700'}`;
+      };
+
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const data = Object.fromEntries(new FormData(form));
+        delete data.redirect;
+
+        if (!data.access_key) {
+          show(`This form is not connected yet. ${fallback}`, false);
+          return;
+        }
+
+        button.disabled = true;
+        label.textContent = 'Sending…';
+        show('', true);
+        try {
+          const response = await fetch(form.action, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+            body: JSON.stringify(data),
+          });
+          const result = await response.json();
+          if (!result.success) throw new Error(result.message);
+          form.reset();
+          show(form.dataset.success!, true);
+        } catch {
+          show(`Sorry, your message could not be sent. ${fallback}`, false);
+        } finally {
+          button.disabled = false;
+          label.textContent = idleLabel;
+        }
+      });
+    });
+  });
+</script>

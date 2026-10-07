@@ -1,0 +1,28 @@
+---
+interface Props {
+  steps: { title: string; text: string }[];
+}
+
+const { steps } = Astro.props;
+---
+
+<ol
+  class:list={['relative grid gap-x-6 gap-y-10 sm:grid-cols-2', steps.length === 5 ? 'lg:grid-cols-5' : 'lg:grid-cols-4']}
+  data-stagger
+>
+  {
+    steps.map((step, i) => (
+      <li class="group/step relative">
+        <div class="flex items-center gap-4">
+          <span class="grid size-14 shrink-0 place-items-center rounded-full border border-gold-500 font-serif text-2xl font-semibold text-gold-300 transition-colors duration-500 group-hover/step:bg-gold-500 group-hover/step:text-paddy-900">
+            {i + 1}
+          </span>
+          {/* connector to the next step */}
+          {i < steps.length - 1 && <span class="h-px flex-1 bg-linear-to-r from-gold-500 to-gold-500/0" aria-hidden="true" />}
+        </div>
+        <h3 class="mt-5 text-lg font-semibold text-white">{step.title}</h3>
+        <p class="mt-2 leading-relaxed text-white/70">{step.text}</p>
+      </li>
+    ))
+  }
+</ol>

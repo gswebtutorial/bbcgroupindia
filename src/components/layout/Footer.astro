@@ -1,0 +1,110 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../../assets/brand/logo.png';
+import logoWhite from '../../assets/brand/logo-white.png';
+import { businesses } from '../../data/businesses';
+import { nav, site } from '../../data/site';
+import Icon from '../ui/Icon.astro';
+
+const company = [...nav.filter((item) => !item.children && item.href !== '/'), { label: 'Contact Us', href: '/contact' }];
+const year = new Date().getFullYear();
+---
+
+<footer class="relative overflow-hidden bg-paddy-900 text-white">
+  {/* logo roundel as a faint watermark */}
+  <Image
+    src={logoWhite}
+    alt=""
+    width={520}
+    height={520}
+    class="pointer-events-none absolute -bottom-40 -right-32 size-[520px] opacity-[0.04]"
+  />
+
+  <div class="container-site relative grid gap-12 py-16 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr]" data-stagger>
+    <div>
+      <a href="/" class="flex items-center gap-3" aria-label={`${site.name} home`}>
+        <Image src={logo} alt="" width={128} height={128} class="size-16" />
+        <span class="leading-none">
+          <span class="block font-serif text-2xl font-semibold tracking-wide">BBC Group</span>
+          <span class="mt-1 block text-[0.65rem] font-semibold uppercase tracking-[0.42em] text-gold-300">India</span>
+        </span>
+      </a>
+      <p class="mt-6 max-w-xs font-serif text-xl italic leading-snug text-gold-300">{site.tagline}</p>
+    </div>
+
+    <div>
+      <h2 class="text-xs font-semibold uppercase tracking-[0.2em] text-gold-300">Our Businesses</h2>
+      <ul class="mt-5 space-y-3 text-sm text-white/80">
+        {
+          businesses.map((b) => (
+            <li>
+              <a href={`/businesses/${b.slug}`} class="link-draw hover:text-white">
+                {b.title}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div>
+      <h2 class="text-xs font-semibold uppercase tracking-[0.2em] text-gold-300">Company</h2>
+      <ul class="mt-5 space-y-3 text-sm text-white/80">
+        {
+          company.map((item) => (
+            <li>
+              <a href={item.href} class="link-draw hover:text-white">
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div>
+      <h2 class="text-xs font-semibold uppercase tracking-[0.2em] text-gold-300">Get in Touch</h2>
+      <ul class="mt-5 space-y-4 text-sm text-white/80">
+        <li class="font-semibold text-white">{site.contact.person}</li>
+        <li>
+          <a href={site.contact.phoneHref} class="flex items-start gap-3 hover:text-white">
+            <Icon name="phone" class="mt-0.5 size-4 shrink-0 text-gold-300" />
+            {site.contact.phoneDisplay}
+          </a>
+        </li>
+        <li>
+          <a href={`mailto:${site.contact.email}`} class="flex items-start gap-3 break-all hover:text-white">
+            <Icon name="mail" class="mt-0.5 size-4 shrink-0 text-gold-300" />
+            {site.contact.email}
+          </a>
+        </li>
+        <li>
+          <a
+            href={site.contact.mapsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex items-start gap-3 hover:text-white"
+          >
+            <Icon name="map-pin" class="mt-0.5 size-4 shrink-0 text-gold-300" />
+            <span>
+              {site.contact.address}
+              <span class="mt-1 block text-gold-300">View on Google Maps</span>
+            </span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="relative border-t border-white/10">
+    <div
+      class="container-site flex flex-col gap-2 py-6 text-xs text-white/60 sm:flex-row sm:items-center sm:justify-between"
+    >
+      <p>© {year} {site.name}. All rights reserved.</p>
+      <p class="flex gap-4">
+        <a href="/privacy-policy" class="hover:text-white">Privacy Policy</a>
+        <span>Website by Welfare Infotech</span>
+      </p>
+    </div>
+  </div>
+</footer>

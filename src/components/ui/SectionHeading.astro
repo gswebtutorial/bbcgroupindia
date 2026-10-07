@@ -1,0 +1,41 @@
+---
+interface Props {
+  eyebrow?: string;
+  title: string;
+  align?: 'left' | 'center';
+  tone?: 'light' | 'dark';
+  class?: string;
+}
+
+const { eyebrow, title, align = 'left', tone = 'light', class: className = '' } = Astro.props;
+---
+
+<div class:list={[align === 'center' && 'mx-auto text-center', 'max-w-3xl', className]} data-reveal>
+  {/* five stars from the logo, used as a divider */}
+  <div
+    class:list={['mb-4 text-xs tracking-[0.5em]', tone === 'dark' ? 'text-gold-300' : 'text-gold-600']}
+    aria-hidden="true"
+  >
+    ★★★★★
+  </div>
+  {
+    eyebrow && (
+      <p
+        class:list={[
+          'mb-2 font-serif text-xl italic',
+          tone === 'dark' ? 'text-gold-300' : 'text-gold-600',
+        ]}
+      >
+        {eyebrow}
+      </p>
+    )
+  }
+  <h2
+    class:list={[
+      'text-3xl font-semibold leading-tight tracking-tight sm:text-4xl',
+      tone === 'dark' ? 'text-white' : 'text-paddy-900',
+    ]}
+  >
+    {title}
+  </h2>
+</div>

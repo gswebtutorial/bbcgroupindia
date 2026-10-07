@@ -1,0 +1,143 @@
+---
+import { Image } from 'astro:assets';
+import { heroSlides } from '../../data/home';
+import Button from '../ui/Button.astro';
+---
+
+<section
+  id="hero"
+  class="relative flex h-svh max-h-[1080px] min-h-[680px] items-center overflow-hidden bg-paddy-900 text-white"
+  aria-roledescription="carousel"
+  aria-label="Highlights"
+>
+  {/* Photos cross-fade behind the panel; the active one zooms slowly */}
+  {
+    heroSlides.map((slide, i) => (
+      <div
+        class="absolute inset-0 opacity-0 transition-opacity duration-[1200ms] ease-brand data-active:opacity-100 lg:left-[38%]"
+        data-hero-image
+        data-active={i === 0 ? '' : undefined}
+      >
+        <Image
+          src={slide.image}
+          alt=""
+          widths={[768, 1280, 1920]}
+          sizes="(min-width: 1024px) 62vw, 100vw"
+          loading={i === 0 ? 'eager' : 'lazy'}
+          fetchpriority={i === 0 ? 'high' : undefined}
+          class="size-full object-cover in-data-active:animate-[ken-burns_9s_ease-out_forwards] motion-reduce:animate-none"
+        />
+      </div>
+    ))
+  }
+
+  {/* Angled panel on desktop, tinted overlay on small screens */}
+  <div class="absolute inset-0 bg-paddy-900/80 lg:hidden"></div>
+  <div class="panel-angled absolute inset-y-0 left-0 hidden w-[66%] bg-paddy-900 lg:block"></div>
+  <div class="absolute inset-x-0 top-0 h-48 bg-linear-to-b from-paddy-900/95 via-paddy-900/55 to-transparent"></div>
+
+  <div class="container-site relative pt-28">
+    <div class="grid max-w-2xl">
+      {
+        heroSlides.map((slide, i) => {
+          const Heading = i === 0 ? 'h1' : 'h2';
+          return (
+            <div
+              class="invisible col-start-1 row-start-1 translate-y-6 opacity-0 transition-[opacity,translate,visibility] duration-700 ease-brand data-active:visible data-active:translate-y-0 data-active:opacity-100 data-active:delay-300"
+              data-hero-slide
+              data-active={i === 0 ? '' : undefined}
+              role="group"
+              aria-roledescription="slide"
+              aria-label={`${i + 1} of ${heroSlides.length}`}
+            >
+              <p class="font-serif text-xl italic text-gold-300">{slide.eyebrow}</p>
+              <Heading class="mt-4 text-4xl font-semibold leading-[1.1] tracking-tight sm:text-5xl lg:text-6xl">
+                {slide.title[0]}{' '}<span class="text-gold-300">{slide.title[1]}</span>{' '}{slide.title[2]}
+              </Heading>
+              <p class="mt-6 max-w-xl text-lg leading-relaxed text-white/85">{slide.text}</p>
+              <div class="mt-9 flex flex-wrap gap-4">
+                <Button href={slide.primary.href}>{slide.primary.label}</Button>
+                {slide.secondary && (
+                  <Button href={slide.secondary.href} variant="outline-light" arrow={false}>
+                    {slide.secondary.label}
+                  </Button>
+                )}
+              </div>
+            </div>
+          );
+        })
+      }
+    </div>
+  </div>
+
+  <div class="container-site absolute inset-x-0 bottom-8 flex items-center gap-3">
+    {
+      heroSlides.map((_, i) => (
+        <button
+          type="button"
+          class="group/dot h-6 w-10 cursor-pointer"
+          data-hero-dot
+          data-active={i === 0 ? '' : undefined}
+          aria-label={`Show slide ${i + 1}`}
+        >
+          <span class="block h-0.5 w-full bg-white/35 transition-colors duration-500 group-hover/dot:bg-white group-data-active/dot:bg-gold-500" />
+        </button>
+      ))
+    }
+  </div>
+</section>
+
+<script>
+  const INTERVAL = 7000;
+
+  document.addEventListener('astro:page-load', () => {
+    const hero = document.getElementById('hero');
+    if (!hero) return;
+
+    const groups = ['[data-hero-image]', '[data-hero-slide]', '[data-hero-dot]'].map((selector) => [
+      ...hero.querySelectorAll<HTMLElement>(selector),
+    ]);
+    const dots = groups[2];
+    const count = dots.length;
+    let current = 0;
+    let timer: number | undefined;
+
+    const show = (index: number) => {
+      current = (index + count) % count;
+      groups.forEach((group) => group.forEach((el, i) => el.toggleAttribute('data-active', i === current)));
+    };
+    const stop = () => window.clearInterval(timer);
+    const start = () => {
+      stop();
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      timer = window.setInterval(() => show(current + 1), INTERVAL);
+    };
+
+    const controller = new AbortController();
+    const { signal } = controller;
+    dots.forEach((dot, i) =>
+      dot.addEventListener(
+        'click',
+        () => {
+          show(i);
+          start();
+        },
+        { signal },
+      ),
+    );
+    hero.addEventListener('mouseenter', stop, { signal });
+    hero.addEventListener('mouseleave', start, { signal });
+    hero.addEventListener('focusin', stop, { signal });
+    hero.addEventListener('focusout', start, { signal });
+    document.addEventListener(
+      'astro:before-swap',
+      () => {
+        stop();
+        controller.abort();
+      },
+      { once: true },
+    );
+
+    start();
+  });
+</script>

@@ -1,0 +1,159 @@
+---
+import { Image } from 'astro:assets';
+import paddy from '../assets/images/about-paddy-hands.jpg';
+import banner from '../assets/images/hero-rice.jpg';
+import Icon, { type IconName } from '../components/ui/Icon.astro';
+import PageBanner from '../components/ui/PageBanner.astro';
+import SectionHeading from '../components/ui/SectionHeading.astro';
+import { businesses } from '../data/businesses';
+import { pillars } from '../data/home';
+import Layout from '../layouts/Layout.astro';
+
+// Vision, mission and values are our drafts for client approval.
+const mission = [
+  'Deliver consistent quality in every product and service.',
+  'Operate efficiently and invest in modern infrastructure.',
+  'Build lasting relationships with farmers, customers and partners.',
+  'Grow in a way that creates employment and value for our communities.',
+];
+
+const values: { icon: IconName; title: string; text: string }[] = [
+  { icon: 'award', title: 'Quality', text: 'We hold ourselves to a consistent standard in everything we make and supply.' },
+  { icon: 'users', title: 'Integrity', text: 'We deal fairly and keep the commitments we make.' },
+  { icon: 'layers', title: 'Reliability', text: 'Customers and partners can depend on us, order after order.' },
+  { icon: 'leaf', title: 'Responsibility', text: 'We respect the land, the resources and the people our businesses rely on.' },
+  { icon: 'trending-up', title: 'Growth', text: 'We build patiently, for the long term.' },
+];
+---
+
+<Layout
+  title="About Us"
+  description="BBC Group India is a diversified business group built around responsible growth, operational excellence, quality and long-term value creation."
+  overlayHeader
+>
+  <PageBanner
+    title="About BBC Group India"
+    text="Building Businesses. Creating Value. Growing Together."
+    image={banner}
+    crumbs={[{ label: 'About Us' }]}
+  />
+
+  <section class="py-20 lg:py-28">
+    <div class="container-site grid items-center gap-12 lg:grid-cols-[1fr_0.85fr] lg:gap-20">
+      <div>
+        <SectionHeading eyebrow="Who we are" title="A Diversified Group. One Vision." />
+        <div class="mt-8 space-y-5 text-lg leading-relaxed text-ink/80" data-stagger>
+          <p class="font-semibold text-paddy-900">
+            BBC Group India is a diversified business group with interests across agriculture, food processing,
+            renewable energy, manufacturing, construction supply and agricultural machinery.
+          </p>
+          <p>
+            The Group's businesses are built around a common philosophy of responsible growth, operational
+            excellence, quality, and long-term value creation.
+          </p>
+          <p>
+            We believe that strong businesses are built over time through disciplined execution, trusted
+            relationships and a constant focus on creating value.
+          </p>
+        </div>
+      </div>
+      <div class="relative" data-reveal="right">
+        <div class="absolute -bottom-4 -right-4 h-2/3 w-2/3 border border-gold-500" aria-hidden="true"></div>
+        <div class="relative aspect-[4/5] overflow-hidden rounded">
+          <Image
+            src={paddy}
+            alt="Hands pouring freshly harvested paddy"
+            widths={[480, 800, 1200]}
+            sizes="(min-width: 1024px) 40vw, 100vw"
+            class="h-[116%] w-full object-cover object-[42%_center]"
+            data-parallax
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-ivory py-20 lg:py-28">
+    <div class="container-site">
+      <SectionHeading eyebrow="Our philosophy" title="A Simple Approach" align="center" />
+      <ul class="mt-14 grid gap-8 md:grid-cols-3" data-stagger>
+        {
+          pillars.map((pillar, i) => (
+            <li class="rounded border-t-2 border-gold-500 bg-white p-10">
+              <span class="font-serif text-6xl font-semibold leading-none text-gold-500/50">0{i + 1}</span>
+              <h3 class="mt-5 text-xl font-semibold text-paddy-900">{pillar.title}</h3>
+              <p class="mt-3 leading-relaxed text-ink/70">{pillar.text}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="bg-paddy-900 py-20 text-white lg:py-28">
+    <div class="container-site grid gap-12 lg:grid-cols-2 lg:gap-20">
+      <div data-reveal="left">
+        <p class="font-serif text-xl italic text-gold-300">Our vision</p>
+        <p class="mt-4 text-3xl font-semibold leading-snug tracking-tight sm:text-4xl">
+          To be a trusted, diversified Indian business group known for quality, reliability and responsible growth.
+        </p>
+      </div>
+      <div>
+        <p class="font-serif text-xl italic text-gold-300" data-reveal>Our mission</p>
+        <ul class="mt-6 space-y-5" data-stagger>
+          {
+            mission.map((item) => (
+              <li class="flex gap-4 border-b border-white/10 pb-5 text-lg text-white/85">
+                <span class="mt-1 text-sm text-gold-500" aria-hidden="true">
+                  ★
+                </span>
+                {item}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-20 lg:py-28">
+    <div class="container-site">
+      <SectionHeading eyebrow="What guides us" title="Our Values" />
+      <ul class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-5" data-stagger>
+        {
+          values.map((value) => (
+            <li class="group/item rounded border border-paddy-900/10 p-7 transition-[translate,box-shadow,border-color] duration-500 ease-brand hover:-translate-y-1.5 hover:border-gold-500 hover:shadow-xl">
+              <Icon name={value.icon} class="size-8 text-gold-600" />
+              <h3 class="mt-5 text-lg font-semibold text-paddy-900">{value.title}</h3>
+              <p class="mt-2 text-sm leading-relaxed text-ink/70">{value.text}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="bg-ivory py-20 lg:py-24">
+    <div class="container-site">
+      <SectionHeading eyebrow="Our businesses" title="Strength Across Industries" />
+      <ul class="mt-12 grid gap-px overflow-hidden rounded bg-paddy-900/10 sm:grid-cols-2 lg:grid-cols-3" data-stagger>
+        {
+          businesses.map((business) => (
+            <li>
+              <a
+                href={`/businesses/${business.slug}`}
+                class="group/link flex h-full items-center justify-between gap-4 bg-white p-7 text-lg font-semibold text-paddy-900 transition-colors duration-300 hover:bg-paddy-900 hover:text-white"
+              >
+                {business.title}
+                <Icon
+                  name="arrow-right"
+                  class="size-5 shrink-0 text-gold-600 transition-transform duration-300 ease-brand group-hover/link:translate-x-1 group-hover/link:text-gold-300"
+                />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</Layout>

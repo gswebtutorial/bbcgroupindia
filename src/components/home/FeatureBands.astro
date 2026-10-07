@@ -1,0 +1,84 @@
+---
+import { Image } from 'astro:assets';
+import warehouse from '../../assets/images/infra-warehouse.jpg';
+import sustain from '../../assets/images/sustain-farmer.jpg';
+import { site } from '../../data/site';
+import Button from '../ui/Button.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+---
+
+{
+  site.pages.infrastructure && (
+    <section class="py-20 lg:py-28">
+      <div class="container-site grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
+        <div>
+          <SectionHeading eyebrow="Infrastructure" title="Built for Capacity and Consistency" />
+          <p class="mt-6 text-lg leading-relaxed text-ink/75" data-reveal data-reveal-delay="0.1">
+            Our facilities bring together processing, storage and logistics to deliver reliable supply at scale.
+          </p>
+          <div class="mt-9" data-reveal data-reveal-delay="0.2">
+            <Button href="/infrastructure" variant="dark">Discover More</Button>
+          </div>
+        </div>
+        <div class="relative" data-reveal="right">
+          <div class="absolute -right-4 -top-4 h-2/3 w-2/3 border border-gold-500" aria-hidden="true" />
+          <div class="relative aspect-[3/2] overflow-hidden rounded">
+            <Image
+              src={warehouse}
+              alt="Stacked sacks in a storage warehouse"
+              widths={[640, 960, 1600]}
+              sizes="(min-width: 1024px) 46vw, 100vw"
+              class="h-[116%] w-full object-cover"
+              data-parallax
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+{
+  site.pages.sustainability && (
+    <section class="relative overflow-hidden bg-paddy-900">
+      <Image
+        src={sustain}
+        alt=""
+        widths={[768, 1280, 1920]}
+        sizes="100vw"
+        class="absolute inset-0 h-[120%] w-full object-cover"
+        data-parallax
+      />
+      <div class="container-site relative flex justify-end py-24 lg:py-36">
+        <div class="max-w-xl rounded bg-white p-8 shadow-2xl sm:p-12" data-reveal="right">
+          <SectionHeading eyebrow="Sustainability" title="Growing Responsibly" />
+          <p class="mt-6 text-lg leading-relaxed text-ink/75">
+            We work to reduce waste, use energy and water more efficiently and create lasting value for the
+            communities around us.
+          </p>
+          <div class="mt-8">
+            <Button href="/sustainability" variant="dark">Discover More</Button>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+{
+  site.pages.careers && (
+    <section class="bg-ivory py-20 lg:py-24">
+      <div class="container-site flex flex-wrap items-center justify-between gap-8">
+        <div>
+          <SectionHeading eyebrow="Careers" title="Grow with BBC Group India" />
+          <p class="mt-4 max-w-xl text-lg leading-relaxed text-ink/75" data-reveal>
+            Join a group that is building across agriculture, food, energy and industry.
+          </p>
+        </div>
+        <div data-reveal>
+          <Button href="/careers" variant="dark">Discover More</Button>
+        </div>
+      </div>
+    </section>
+  )
+}

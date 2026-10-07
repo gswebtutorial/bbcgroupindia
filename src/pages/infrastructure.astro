@@ -1,0 +1,132 @@
+---
+import banner from '../assets/images/infra-warehouse.jpg';
+import Button from '../components/ui/Button.astro';
+import Icon, { type IconName } from '../components/ui/Icon.astro';
+import PageBanner from '../components/ui/PageBanner.astro';
+import SectionHeading from '../components/ui/SectionHeading.astro';
+import { businesses } from '../data/businesses';
+import Layout from '../layouts/Layout.astro';
+
+// Draft copy describing what a rice-processing operation involves, with no figures.
+const capabilities: { icon: IconName; title: string; text: string }[] = [
+  {
+    icon: 'factory',
+    title: 'Processing',
+    text: 'Milling lines that take paddy through cleaning, de-husking, polishing, grading and packing.',
+  },
+  {
+    icon: 'layers',
+    title: 'Storage & Handling',
+    text: 'Space to receive and hold paddy and finished rice, handled with care to protect quality.',
+  },
+  {
+    icon: 'award',
+    title: 'Quality Checks',
+    text: 'Checks from paddy intake to finished product so that what leaves the mill is consistent.',
+  },
+  {
+    icon: 'trending-up',
+    title: 'Dispatch',
+    text: 'Loading and dispatch organised to meet delivery commitments.',
+  },
+];
+
+// Facility details per site. Add entries as the client confirms them; the section stays hidden while empty.
+// Example: { name: 'Rice Mill', location: 'Salhebharri, Rajnandgaon', detail: 'Milling capacity: __ TPH' }
+const facilities: { name: string; location: string; detail: string }[] = [];
+---
+
+<Layout
+  title="Infrastructure"
+  description="The facilities behind BBC Group India: processing, storage, quality and dispatch built for capacity and consistency."
+  overlayHeader
+>
+  <PageBanner
+    title="Infrastructure"
+    text="Built for capacity and consistency."
+    image={banner}
+    crumbs={[{ label: 'Infrastructure' }]}
+  />
+
+  <section class="bg-ivory py-20 lg:py-24">
+    <div class="container-site grid gap-6 lg:grid-cols-2 lg:gap-20">
+      <SectionHeading eyebrow="Our facilities" title="The Foundation of Reliable Supply" />
+      <div class="space-y-5 text-lg leading-relaxed text-ink/80" data-stagger>
+        <p>
+          Our facilities bring together processing, storage and logistics to deliver reliable supply at scale.
+        </p>
+        <p>
+          We invest in modern machinery and facilities that improve efficiency, consistency and capacity across our
+          operations.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-20 lg:py-28">
+    <div class="container-site">
+      <SectionHeading eyebrow="Rice processing" title="From Intake to Dispatch" />
+      <ul class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4" data-stagger>
+        {
+          capabilities.map((item) => (
+            <li class="group/item rounded border border-paddy-900/10 p-8 transition-[translate,box-shadow,border-color] duration-500 ease-brand hover:-translate-y-1.5 hover:border-gold-500 hover:shadow-xl">
+              <Icon name={item.icon} class="size-9 text-gold-600" />
+              <h3 class="mt-6 text-lg font-semibold text-paddy-900">{item.title}</h3>
+              <span class="mt-3 block h-0.5 w-10 bg-gold-500 transition-[width] duration-500 ease-brand group-hover/item:w-20" />
+              <p class="mt-4 leading-relaxed text-ink/70">{item.text}</p>
+            </li>
+          ))
+        }
+      </ul>
+      <div class="mt-10" data-reveal>
+        <Button href="/businesses/rice-processing" variant="dark">See How Rice Is Processed</Button>
+      </div>
+    </div>
+  </section>
+
+  {
+    facilities.length > 0 && (
+      <section class="bg-ivory py-20 lg:py-28">
+        <div class="container-site">
+          <SectionHeading eyebrow="Where we operate" title="Our Facilities" />
+          <ul class="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3" data-stagger>
+            {facilities.map((facility) => (
+              <li class="rounded border-t-2 border-gold-500 bg-white p-8">
+                <h3 class="text-xl font-semibold text-paddy-900">{facility.name}</h3>
+                <p class="mt-2 flex items-center gap-2 text-sm text-gold-600">
+                  <Icon name="map-pin" class="size-4" />
+                  {facility.location}
+                </p>
+                <p class="mt-4 leading-relaxed text-ink/70">{facility.detail}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+
+  <section class="bg-paddy-900 py-20 text-white lg:py-24">
+    <div class="container-site">
+      <SectionHeading eyebrow="Across the group" title="Infrastructure Behind Every Business" tone="dark" />
+      <ul class="mt-12 grid gap-px overflow-hidden rounded bg-white/10 sm:grid-cols-2 lg:grid-cols-3" data-stagger>
+        {
+          businesses.map((business) => (
+            <li>
+              <a
+                href={`/businesses/${business.slug}`}
+                class="group/link flex h-full items-center justify-between gap-4 bg-paddy-900 p-7 text-lg font-semibold transition-colors duration-300 hover:bg-paddy-700"
+              >
+                {business.title}
+                <Icon
+                  name="arrow-right"
+                  class="size-5 shrink-0 text-gold-300 transition-transform duration-300 ease-brand group-hover/link:translate-x-1"
+                />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</Layout>

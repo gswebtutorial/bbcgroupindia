@@ -1,0 +1,70 @@
+---
+import type { ImageMetadata } from 'astro';
+import { Image } from 'astro:assets';
+
+interface Props {
+  title: string;
+  text?: string;
+  image: ImageMetadata;
+  /** Trail after "Home", e.g. [{ label: 'Our Businesses', href: '/businesses' }] */
+  crumbs?: { label: string; href?: string }[];
+  /** Shared-element name so a card photo can morph into this banner */
+  transitionName?: string;
+}
+
+const { title, text, image, crumbs = [], transitionName } = Astro.props;
+---
+
+<section class="relative flex min-h-[520px] items-end overflow-hidden bg-paddy-900 text-white lg:min-h-[580px]">
+  <div class="absolute inset-0 lg:left-[40%]">
+    <Image
+      src={image}
+      alt=""
+      widths={[768, 1280, 1920]}
+      sizes="(min-width: 1024px) 60vw, 100vw"
+      loading="eager"
+      fetchpriority="high"
+      class="size-full object-cover"
+      transition:name={transitionName}
+    />
+  </div>
+  <div class="absolute inset-0 bg-paddy-900/80 lg:hidden"></div>
+  <div class="panel-angled absolute inset-y-0 left-0 hidden w-[64%] bg-paddy-900 lg:block"></div>
+  <div class="absolute inset-x-0 top-0 h-48 bg-linear-to-b from-paddy-900/95 via-paddy-900/55 to-transparent"></div>
+
+  <div class="container-site relative pb-16 pt-44 lg:pb-20">
+    <nav aria-label="Breadcrumb" class="text-sm text-white/70" data-reveal>
+      <ol class="flex flex-wrap items-center gap-2">
+        <li><a href="/" class="hover:text-gold-300">Home</a></li>
+        {
+          crumbs.map((crumb) => (
+            <li class="flex items-center gap-2">
+              <span class="text-gold-500" aria-hidden="true">/</span>
+              {crumb.href ? (
+                <a href={crumb.href} class="hover:text-gold-300">
+                  {crumb.label}
+                </a>
+              ) : (
+                <span aria-current="page">{crumb.label}</span>
+              )}
+            </li>
+          ))
+        }
+      </ol>
+    </nav>
+    <h1
+      class="mt-5 max-w-2xl text-4xl font-semibold leading-[1.1] tracking-tight sm:text-5xl"
+      data-reveal
+      data-reveal-delay="0.1"
+    >
+      {title}
+    </h1>
+    {
+      text && (
+        <p class="mt-5 max-w-xl font-serif text-2xl italic leading-snug text-gold-300" data-reveal data-reveal-delay="0.2">
+          {text}
+        </p>
+      )
+    }
+  </div>
+</section>

@@ -1,0 +1,74 @@
+---
+import { Image } from 'astro:assets';
+import farmer from '../../assets/images/intro-farmer.jpg';
+import { pillars, stats } from '../../data/home';
+import SectionHeading from '../ui/SectionHeading.astro';
+---
+
+<section class="bg-ivory py-20 lg:py-28">
+  <div class="container-site grid items-center gap-12 lg:grid-cols-[0.85fr_1fr] lg:gap-20">
+    <div class="relative" data-reveal="left">
+      {/* offset gold frame behind the photo */}
+      <div class="absolute -bottom-4 -left-4 h-2/3 w-2/3 border border-gold-500" aria-hidden="true"></div>
+      <div class="relative aspect-[4/5] overflow-hidden rounded">
+        <Image
+          src={farmer}
+          alt="Farmer looking over a green paddy field"
+          widths={[480, 800, 1200]}
+          sizes="(min-width: 1024px) 40vw, 100vw"
+          class="h-[116%] w-full object-cover object-[18%_center]"
+          data-parallax
+        />
+      </div>
+    </div>
+
+    <div>
+      <SectionHeading eyebrow="Who we are" title="A Diversified Group. One Vision." />
+      <div class="mt-8 space-y-5 text-lg leading-relaxed text-ink/80" data-stagger>
+        <p>BBC Group India brings together businesses operating across multiple sectors of the Indian economy.</p>
+        <p>
+          From agriculture and rice processing to renewable energy, brick manufacturing, building construction
+          supplies and agricultural machinery, our businesses are connected by a common commitment to operational
+          excellence, reliability and sustainable growth.
+        </p>
+        <p>
+          We believe that strong businesses are built over time through disciplined execution, trusted
+          relationships and a constant focus on creating value.
+        </p>
+        <p class="font-semibold text-paddy-900">
+          Our approach is simple: build responsibly, operate efficiently and grow for the long term.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-site mt-16 lg:mt-24">
+    {
+      stats.length > 0 ? (
+        <dl class="grid grid-cols-2 gap-8 border-t border-paddy-900/15 pt-12 lg:grid-cols-4" data-stagger>
+          {stats.map((stat) => (
+            <div>
+              <dd class="font-serif text-6xl font-semibold text-gold-600" data-count={stat.value} data-suffix={stat.suffix}>
+                {stat.value}
+                {stat.suffix}
+              </dd>
+              <dt class="mt-2 text-sm font-semibold uppercase tracking-widest text-paddy-900">{stat.label}</dt>
+            </div>
+          ))}
+        </dl>
+      ) : (
+        <ul class="grid gap-8 border-t border-paddy-900/15 pt-12 md:grid-cols-3" data-stagger>
+          {pillars.map((pillar, i) => (
+            <li class="flex gap-5">
+              <span class="font-serif text-5xl font-semibold leading-none text-gold-500">0{i + 1}</span>
+              <div>
+                <h3 class="text-lg font-semibold text-paddy-900">{pillar.title}</h3>
+                <p class="mt-1 text-ink/70">{pillar.text}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </div>
+</section>

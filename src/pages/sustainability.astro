@@ -1,0 +1,157 @@
+---
+import banner from '../assets/images/sustain-farmer.jpg';
+import Button from '../components/ui/Button.astro';
+import Icon, { type IconName } from '../components/ui/Icon.astro';
+import PageBanner from '../components/ui/PageBanner.astro';
+import SectionHeading from '../components/ui/SectionHeading.astro';
+import Layout from '../layouts/Layout.astro';
+
+// The four commitments use the client's supplied wording. They say "contributing to" and
+// "aligned with": never "approved by" or "certified under" a government scheme.
+const commitments: { id: string; icon: IconName; label: string; title: string; text: string; href?: string }[] = [
+  {
+    id: 'make-in-india',
+    icon: 'factory',
+    label: 'Indian food manufacturing',
+    title: 'Contributing to Make in India',
+    text: "We are committed to strengthening India's food-processing ecosystem by adding value to India's agricultural produce, creating employment opportunities and delivering quality rice products from India to markets across the country and beyond.",
+  },
+  {
+    id: 'green-manufacturing',
+    icon: 'leaf',
+    label: 'Sustainable manufacturing',
+    title: 'Our Commitment to Green Manufacturing',
+    text: 'We continuously work towards responsible manufacturing by reducing waste, improving resource efficiency and exploring sustainable energy solutions across our operations.',
+  },
+  {
+    id: 'agriculture',
+    icon: 'sprout',
+    label: 'Farmer and agriculture ecosystem',
+    title: "Supporting India's Agricultural Economy",
+    text: "Our operations connect farmers, agricultural production and food processing—helping transform paddy into quality food products while contributing to India's agricultural value chain.",
+  },
+  {
+    id: 'export',
+    icon: 'globe',
+    label: 'Make in India, export from India',
+    title: 'From Indian Farms to Global Markets',
+    text: "We take the strength of India's agricultural production to consumers and businesses across global markets, contributing to India's growing position in the international food and rice trade.",
+    href: '/exports',
+  },
+];
+
+// Draft copy, worded as aims. Replace with specific practices once the client confirms them
+// (e.g. husk used as fuel, solar capacity installed, water reuse).
+const pillars: { icon: IconName; title: string; text: string }[] = [
+  {
+    icon: 'leaf',
+    title: 'Environment',
+    text: 'We work to reduce waste and to use energy, water and raw materials more efficiently across our operations.',
+  },
+  {
+    icon: 'users',
+    title: 'People',
+    text: 'We aim to provide safe workplaces and fair opportunities for everyone who works with us.',
+  },
+  {
+    icon: 'sprout',
+    title: 'Community',
+    text: 'Our businesses create local employment and support the farming communities around us.',
+  },
+];
+---
+
+<Layout
+  title="Sustainability"
+  description="How BBC Group India approaches responsible growth, and how its work aligns with India's priorities: Make in India, green manufacturing, agriculture and exports."
+  overlayHeader
+>
+  <PageBanner
+    title="Growing Responsibly"
+    text="Diversified Businesses. Sustainable Growth."
+    image={banner}
+    crumbs={[{ label: 'Sustainability' }]}
+  />
+
+  <section class="bg-ivory py-20 lg:py-24">
+    <div class="container-site grid gap-6 lg:grid-cols-2 lg:gap-20">
+      <SectionHeading eyebrow="Our approach" title="Build Responsibly. Operate Efficiently. Grow for the Long Term." />
+      <div class="space-y-5 text-lg leading-relaxed text-ink/80" data-stagger>
+        <p>
+          Our businesses depend on land, water, energy and people. Looking after them is not separate from doing
+          good business: it is how a business lasts.
+        </p>
+        <p>
+          With a focus on quality, efficiency and responsible growth, BBC Group India is building businesses that
+          contribute to the economy, create employment and generate long-term value for customers, partners and
+          communities.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-20 lg:py-28">
+    <div class="container-site">
+      <SectionHeading eyebrow="Our commitments" title="Aligned with India's Growth Priorities" />
+      <p class="mt-6 max-w-3xl text-lg leading-relaxed text-ink/75" data-reveal>
+        Our work is guided by the same priorities that are shaping India's economy — manufacturing in India, growing
+        responsibly, strengthening agriculture and taking Indian produce to the world.
+      </p>
+
+      <ol class="mt-14 divide-y divide-paddy-900/10 border-y border-paddy-900/10">
+        {
+          commitments.map((item, i) => (
+            <li
+              id={item.id}
+              class="group/row grid gap-6 py-10 transition-colors duration-500 hover:bg-ivory md:grid-cols-[auto_1fr] md:gap-12 md:px-6 lg:grid-cols-[auto_1fr_1.3fr]"
+              data-reveal
+            >
+              <div class="flex items-center gap-6">
+                <span class="font-serif text-6xl font-semibold leading-none text-gold-500/50">0{i + 1}</span>
+                <span class="grid size-16 place-items-center rounded-full bg-ivory text-gold-600 transition-colors duration-500 group-hover/row:bg-gold-500 group-hover/row:text-paddy-900">
+                  <Icon name={item.icon} class="size-8" />
+                </span>
+              </div>
+              <div class="md:col-start-2">
+                <p class="font-serif text-lg italic text-gold-600">{item.label}</p>
+                <h3 class="mt-1 text-2xl font-semibold leading-snug text-paddy-900">{item.title}</h3>
+              </div>
+              <div class="md:col-start-2 lg:col-start-3">
+                <p class="text-lg leading-relaxed text-ink/75">{item.text}</p>
+                {item.href && (
+                  <a
+                    href={item.href}
+                    class="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-gold-600 hover:text-paddy-900"
+                  >
+                    Explore our export business
+                    <Icon name="arrow-right" class="size-4" />
+                  </a>
+                )}
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="bg-paddy-900 py-20 text-white lg:py-28">
+    <div class="container-site">
+      <SectionHeading eyebrow="Where we focus" title="Environment, People and Community" tone="dark" align="center" />
+      <ul class="mt-14 grid gap-px overflow-hidden rounded bg-white/10 md:grid-cols-3" data-stagger>
+        {
+          pillars.map((pillar) => (
+            <li class="bg-paddy-900 p-10 transition-colors duration-500 hover:bg-paddy-700">
+              <Icon name={pillar.icon} class="size-10 text-gold-300" />
+              <h3 class="mt-6 text-xl font-semibold">{pillar.title}</h3>
+              <p class="mt-3 leading-relaxed text-white/75">{pillar.text}</p>
+            </li>
+          ))
+        }
+      </ul>
+      <div class="mt-12 text-center" data-reveal>
+        <Button href="/businesses/renewable-energy">Our Renewable Energy Business</Button>
+      </div>
+    </div>
+  </section>
+</Layout>

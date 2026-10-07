@@ -1,0 +1,116 @@
+---
+import banner from '../assets/images/hero-paddy.jpg';
+import Icon from '../components/ui/Icon.astro';
+import PageBanner from '../components/ui/PageBanner.astro';
+import Portrait from '../components/ui/Portrait.astro';
+import { isSample, leaders } from '../data/leadership';
+import { site } from '../data/site';
+import Layout from '../layouts/Layout.astro';
+
+if (!site.pages.leadership) return Astro.redirect('/about');
+---
+
+<Layout title="Leadership" description="The leadership team of BBC Group India." overlayHeader>
+  <PageBanner title="Leadership" image={banner} crumbs={[{ label: 'About Us', href: '/about' }, { label: 'Our Leadership' }]} />
+
+  <section class="bg-paddy-900 py-16 text-white lg:py-20">
+    <div class="container-site grid gap-8 lg:grid-cols-2 lg:gap-20">
+      <h2 class="text-3xl font-semibold leading-tight tracking-tight sm:text-4xl" data-reveal>
+        <span class="text-gold-300">Experienced</span> leadership, built on trust.
+      </h2>
+      <div class="space-y-4 text-lg leading-relaxed text-white/80" data-stagger>
+        <p>
+          Our leadership team guides the Group's businesses with a shared focus on quality, responsible growth and
+          long-term value.
+        </p>
+        <p>Each member brings a close understanding of our businesses alongside relevant experience.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-20 lg:py-28">
+    <div class="container-site">
+      {
+        isSample && (
+          <p class="mb-12 rounded border border-gold-500 bg-ivory px-5 py-3 text-center text-sm font-semibold text-paddy-900">
+            Sample profiles shown for layout. Names, designations, photographs and biographies will be updated.
+          </p>
+        )
+      }
+
+      {/* flex + justify-center so an incomplete last row sits in the middle */}
+      <ul class="flex flex-wrap justify-center gap-x-8 gap-y-14" data-stagger>
+        {
+          leaders.map((leader, i) => (
+            <li class="group/leader w-full text-center sm:w-[calc(50%-1rem)] lg:w-[calc(25%-1.5rem)]">
+              <button type="button" class="block w-full cursor-pointer" data-bio-open={`bio-${i}`}>
+                <span class="block aspect-[4/5] overflow-hidden rounded-bl-[3.5rem] rounded-tr-[3.5rem] bg-ivory">
+                  <Portrait
+                    photo={leader.photo}
+                    name={leader.name}
+                    class="transition-transform duration-[900ms] ease-brand group-hover/leader:scale-105"
+                  />
+                </span>
+                <span class="mt-6 block text-xl font-semibold text-paddy-900">{leader.name}</span>
+                <span class="mt-1 block text-ink/70">{leader.role}</span>
+                <span class="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-gold-600">
+                  <span class="link-draw group-hover/leader:bg-[length:100%_1.5px]">View Biography</span>
+                  <Icon
+                    name="arrow-right"
+                    class="size-4 transition-transform duration-300 ease-brand group-hover/leader:translate-x-1"
+                  />
+                </span>
+              </button>
+
+              <dialog
+                id={`bio-${i}`}
+                class="m-auto w-[calc(100%-2rem)] max-w-3xl rounded bg-white p-0 text-left text-ink shadow-2xl backdrop:bg-paddy-900/75 open:animate-[page-in_0.4s_var(--ease-brand)]"
+                aria-labelledby={`bio-${i}-name`}
+                data-lenis-prevent
+              >
+                <div class="grid max-h-[85svh] overflow-y-auto sm:grid-cols-[240px_1fr]">
+                  <div class="aspect-[4/5] bg-ivory sm:aspect-auto">
+                    <Portrait photo={leader.photo} name={leader.name} />
+                  </div>
+                  <div class="p-8 sm:p-10">
+                    <h3 id={`bio-${i}-name`} class="text-2xl font-semibold text-paddy-900">
+                      {leader.name}
+                    </h3>
+                    <p class="mt-1 font-serif text-xl italic text-gold-600">{leader.role}</p>
+                    <span class="mt-5 block h-0.5 w-12 bg-gold-500" />
+                    <div class="mt-6 space-y-4 leading-relaxed text-ink/80">
+                      {leader.bio.map((paragraph) => (
+                        <p>{paragraph}</p>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  class="absolute right-3 top-3 grid size-10 cursor-pointer place-items-center rounded-full bg-white/90 text-paddy-900 hover:bg-gold-500"
+                  aria-label="Close biography"
+                  data-bio-close
+                >
+                  <Icon name="close" />
+                </button>
+              </dialog>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    document.querySelectorAll<HTMLElement>('[data-bio-open]').forEach((button) => {
+      const dialog = document.getElementById(button.dataset.bioOpen!) as HTMLDialogElement | null;
+      if (!dialog) return;
+      button.addEventListener('click', () => dialog.showModal());
+      dialog.querySelector('[data-bio-close]')?.addEventListener('click', () => dialog.close());
+      // a click on the backdrop lands on the dialog element itself
+      dialog.addEventListener('click', (event) => event.target === dialog && dialog.close());
+    });
+  });
+</script>

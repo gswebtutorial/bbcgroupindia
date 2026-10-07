@@ -1,0 +1,31 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  href: string;
+  variant?: 'gold' | 'dark' | 'outline' | 'outline-light';
+  arrow?: boolean;
+  class?: string;
+}
+
+const { href, variant = 'gold', arrow = true, class: className = '' } = Astro.props;
+
+const variants = {
+  gold: 'bg-gold-500 text-paddy-900 hover:bg-gold-300',
+  dark: 'bg-paddy-900 text-white hover:bg-paddy-700',
+  outline: 'border border-paddy-900 text-paddy-900 hover:bg-paddy-900 hover:text-white',
+  'outline-light': 'border border-white/70 text-white hover:bg-white hover:text-paddy-900',
+};
+---
+
+<a
+  href={href}
+  class:list={[
+    'group/btn inline-flex items-center gap-2 rounded px-6 py-3 text-sm font-semibold tracking-wide transition-colors duration-300',
+    variants[variant],
+    className,
+  ]}
+>
+  <slot />
+  {arrow && <Icon name="arrow-right" class="size-4 transition-transform duration-300 ease-brand group-hover/btn:translate-x-1" />}
+</a>

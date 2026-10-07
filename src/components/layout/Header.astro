@@ -1,0 +1,202 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../../assets/brand/logo.png';
+import { nav, site } from '../../data/site';
+import Icon from '../ui/Icon.astro';
+
+interface Props {
+  /** Transparent header sitting over a dark hero; turns solid on scroll */
+  overlay?: boolean;
+}
+
+const { overlay = false } = Astro.props;
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
+---
+
+<header
+  id="site-header"
+  class="group fixed inset-x-0 top-0 z-50 text-white transition-[background-color,box-shadow,color] duration-500 data-solid:bg-white data-solid:text-ink data-solid:shadow-[0_1px_0_rgb(0_0_0/0.08)]"
+  data-overlay={overlay ? '' : undefined}
+  data-solid={overlay ? undefined : ''}
+>
+  {/* Utility bar, collapses once the page is scrolled */}
+  <div
+    class="grid grid-rows-[1fr] bg-paddy-900 text-white transition-[grid-template-rows] duration-500 ease-brand group-data-scrolled:grid-rows-[0fr]"
+  >
+    <div class="overflow-hidden">
+      <div class="container-site flex h-9 items-center justify-end gap-6 text-xs">
+        <a href={site.contact.phoneHref} class="inline-flex items-center gap-2 hover:text-gold-300">
+          <Icon name="phone" class="size-3.5" />
+          {site.contact.phoneDisplay}
+        </a>
+        <a href={`mailto:${site.contact.email}`} class="hidden items-center gap-2 hover:text-gold-300 sm:inline-flex">
+          <Icon name="mail" class="size-3.5" />
+          {site.contact.email}
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-site flex h-20 items-center justify-between gap-6">
+    <a href="/" class="flex shrink-0 items-center gap-3" aria-label={`${site.name} home`}>
+      <Image src={logo} alt="" width={112} height={112} loading="eager" class="size-14" />
+      <span class="leading-none">
+        <span class="block font-serif text-2xl font-semibold tracking-wide">BBC Group</span>
+        <span class="mt-1 block text-[0.65rem] font-semibold uppercase tracking-[0.42em] text-gold-500">India</span>
+      </span>
+    </a>
+
+    <nav class="hidden items-center gap-7 text-sm font-medium xl:flex" aria-label="Main">
+      {
+        nav.map((item) =>
+          item.children ? (
+            <div class="group/menu relative">
+              <a
+                href={item.href}
+                class="link-draw inline-flex items-center gap-1 py-2"
+                aria-current={isActive(item.href) ? 'page' : undefined}
+              >
+                {item.label}
+                <Icon
+                  name="chevron-down"
+                  class="size-3.5 transition-transform duration-300 group-hover/menu:rotate-180"
+                />
+              </a>
+              <div class="invisible absolute left-1/2 top-full w-72 -translate-x-1/2 translate-y-2 pt-3 opacity-0 transition-all duration-300 ease-brand group-focus-within/menu:visible group-focus-within/menu:translate-y-0 group-focus-within/menu:opacity-100 group-hover/menu:visible group-hover/menu:translate-y-0 group-hover/menu:opacity-100">
+                <ul class="rounded border-t-2 border-gold-500 bg-white py-2 text-ink shadow-xl">
+                  {item.children.map((child) => (
+                    <li>
+                      <a
+                        href={child.href}
+                        class="block px-5 py-2.5 transition-colors hover:bg-ivory hover:text-gold-600"
+                      >
+                        {child.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          ) : (
+            <a href={item.href} class="link-draw py-2" aria-current={isActive(item.href) ? 'page' : undefined}>
+              {item.label}
+            </a>
+          ),
+        )
+      }
+      <a
+        href="/contact"
+        class="rounded bg-gold-500 px-5 py-2.5 font-semibold text-paddy-900 transition-colors duration-300 hover:bg-gold-300"
+      >
+        Contact Us
+      </a>
+    </nav>
+
+    <button
+      id="menu-toggle"
+      type="button"
+      class="-mr-2 p-2 xl:hidden"
+      aria-controls="mobile-menu"
+      aria-expanded="false"
+      aria-label="Open menu"
+    >
+      <Icon name="menu" class="size-7" />
+    </button>
+  </div>
+</header>
+
+<div
+  id="mobile-menu"
+  class="invisible fixed inset-0 z-[60] flex translate-x-full flex-col overflow-y-auto bg-paddy-900 text-white transition-[translate,visibility] duration-500 ease-brand data-open:visible data-open:translate-x-0 xl:hidden"
+  data-lenis-prevent
+>
+  <div class="container-site flex h-20 shrink-0 items-center justify-between">
+    <span class="font-serif text-2xl font-semibold">BBC Group India</span>
+    <button id="menu-close" type="button" class="-mr-2 p-2" aria-label="Close menu">
+      <Icon name="close" class="size-7" />
+    </button>
+  </div>
+  <nav class="container-site flex-1 py-6" aria-label="Mobile">
+    <ul class="divide-y divide-white/10 text-lg">
+      {
+        nav.map((item) => (
+          <li>
+            {item.children ? (
+              <details class="group/details">
+                <summary class="flex cursor-pointer list-none items-center justify-between py-4">
+                  {item.label}
+                  <Icon name="chevron-down" class="size-5 transition-transform group-open/details:rotate-180" />
+                </summary>
+                <ul class="pb-4 pl-4 text-base text-white/80">
+                  <li>
+                    <a href={item.href} class="block py-2 hover:text-gold-300">
+                      All Businesses
+                    </a>
+                  </li>
+                  {item.children.map((child) => (
+                    <li>
+                      <a href={child.href} class="block py-2 hover:text-gold-300">
+                        {child.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </details>
+            ) : (
+              <a href={item.href} class="block py-4 hover:text-gold-300">
+                {item.label}
+              </a>
+            )}
+          </li>
+        ))
+      }
+      <li>
+        <a href="/contact" class="block py-4 text-gold-300">Contact Us</a>
+      </li>
+    </ul>
+  </nav>
+  <div class="container-site space-y-3 border-t border-white/10 py-6 text-sm">
+    <a href={site.contact.phoneHref} class="flex items-center gap-3">
+      <Icon name="phone" class="size-4 text-gold-300" />
+      {site.contact.phoneDisplay}
+    </a>
+    <a href={`mailto:${site.contact.email}`} class="flex items-center gap-3">
+      <Icon name="mail" class="size-4 text-gold-300" />
+      {site.contact.email}
+    </a>
+  </div>
+</div>
+
+<script>
+  // Re-runs after every view-transition navigation
+  document.addEventListener('astro:page-load', () => {
+    const header = document.getElementById('site-header');
+    const menu = document.getElementById('mobile-menu');
+    const toggle = document.getElementById('menu-toggle');
+    if (!header || !menu || !toggle) return;
+
+    const controller = new AbortController();
+    const { signal } = controller;
+    document.addEventListener('astro:before-swap', () => controller.abort(), { once: true });
+
+    const overlay = header.hasAttribute('data-overlay');
+    const onScroll = () => {
+      const scrolled = window.scrollY > 40;
+      header.toggleAttribute('data-scrolled', scrolled);
+      header.toggleAttribute('data-solid', scrolled || !overlay);
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true, signal });
+
+    const setOpen = (open: boolean) => {
+      menu.toggleAttribute('data-open', open);
+      toggle.setAttribute('aria-expanded', String(open));
+      document.documentElement.classList.toggle('overflow-hidden', open);
+    };
+    toggle.addEventListener('click', () => setOpen(true), { signal });
+    document.getElementById('menu-close')?.addEventListener('click', () => setOpen(false), { signal });
+    window.addEventListener('keydown', (e) => e.key === 'Escape' && setOpen(false), { signal });
+    signal.addEventListener('abort', () => setOpen(false));
+  });
+</script>

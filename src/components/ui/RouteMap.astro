@@ -1,0 +1,67 @@
+---
+// Stylised globe with routes fanning out from India. The end points are decorative:
+// no specific destinations are implied.
+interface Props {
+  tone?: 'dark' | 'light';
+  class?: string;
+}
+
+const { tone = 'dark', class: className = '' } = Astro.props;
+
+const origin = { x: 150, y: 250 };
+const routes = [
+  { x: 430, y: 70 },
+  { x: 470, y: 170 },
+  { x: 450, y: 290 },
+  { x: 360, y: 370 },
+  { x: 40, y: 90 },
+  { x: 20, y: 330 },
+];
+const arc = (to: { x: number; y: number }) => {
+  const mx = (origin.x + to.x) / 2;
+  const my = Math.min(origin.y, to.y) - 90;
+  return `M${origin.x} ${origin.y} Q${mx} ${my} ${to.x} ${to.y}`;
+};
+const dark = tone === 'dark';
+---
+
+<svg viewBox="0 0 500 420" class:list={['w-full', className]} fill="none" aria-hidden="true">
+  <g class={dark ? 'stroke-white/15' : 'stroke-paddy-900/15'} stroke-width="1">
+    <circle cx="250" cy="210" r="200"></circle>
+    <ellipse cx="250" cy="210" rx="200" ry="70"></ellipse>
+    <ellipse cx="250" cy="210" rx="200" ry="140"></ellipse>
+    <ellipse cx="250" cy="210" rx="70" ry="200"></ellipse>
+    <ellipse cx="250" cy="210" rx="140" ry="200"></ellipse>
+    <path d="M50 210h400M250 10v400"></path>
+  </g>
+  {
+    routes.map((to) => (
+      <>
+        <path
+          d={arc(to)}
+          pathLength="1"
+          class={dark ? 'stroke-gold-300' : 'stroke-gold-500'}
+          stroke-width="1.75"
+          stroke-linecap="round"
+          data-draw
+        />
+        <circle cx={to.x} cy={to.y} r="4" class={dark ? 'fill-gold-300' : 'fill-gold-500'} />
+      </>
+    ))
+  }
+  <circle
+    cx={origin.x}
+    cy={origin.y}
+    r="16"
+    class="origin-center animate-ping fill-gold-500/40 [transform-box:fill-box] motion-reduce:animate-none"
+  ></circle>
+  <circle cx={origin.x} cy={origin.y} r="7" class="fill-gold-500"></circle>
+  <text
+    x={origin.x}
+    y={origin.y + 30}
+    text-anchor="middle"
+    class:list={['text-[13px] font-semibold tracking-[0.2em]', dark ? 'fill-white' : 'fill-paddy-900']}
+  >
+    INDIA
+  </text>
+</svg>

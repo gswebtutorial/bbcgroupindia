@@ -1,0 +1,67 @@
+---
+import { site } from '../data/site';
+import Layout from '../layouts/Layout.astro';
+
+// Draft policy describing what this website actually does. Have the client review it,
+// and update it if analytics or other third-party tools are added.
+const updated = '7 October 2026';
+---
+
+<Layout title="Privacy Policy" description={`How ${site.name} handles information submitted through this website.`}>
+  <section class="py-16 lg:py-24">
+    <div class="container-site max-w-3xl">
+      <h1 class="text-4xl font-semibold tracking-tight text-paddy-900 sm:text-5xl" data-reveal>Privacy Policy</h1>
+      <p class="mt-4 text-sm text-ink/60" data-reveal>Last updated: {updated}</p>
+
+      <div
+        class="mt-10 space-y-5 text-lg leading-relaxed text-ink/80 [&_h2]:pt-6 [&_h2]:text-2xl [&_h2]:font-semibold [&_h2]:text-paddy-900 [&_li]:ml-5 [&_li]:list-disc [&_ul]:space-y-2"
+        data-reveal
+      >
+        <p>
+          This policy explains what information {site.name} ("we", "us") collects through this website and how we
+          use it.
+        </p>
+
+        <h2>Information we collect</h2>
+        <p>We only collect the information you choose to send us through an enquiry form, by email or by phone:</p>
+        <ul>
+          <li>your name, phone number and email address;</li>
+          <li>your company or organisation and country, if you provide them;</li>
+          <li>the details of your enquiry.</li>
+        </ul>
+
+        <h2>How we use it</h2>
+        <p>
+          We use this information only to respond to your enquiry and to carry on any business discussion that
+          follows. We do not sell your information or use it for unrelated marketing.
+        </p>
+
+        <h2>Who processes it</h2>
+        <p>
+          Enquiry forms on this website are delivered to our email inbox through Web3Forms, a form-delivery
+          service. The Contact page shows a map provided by Google Maps, which may set its own cookies when the
+          map loads.
+        </p>
+
+        <h2>Cookies</h2>
+        <p>This website does not use advertising cookies.</p>
+
+        <h2>How long we keep it</h2>
+        <p>We keep enquiry details for as long as needed to deal with your enquiry and for our business records.</p>
+
+        <h2>Your choices</h2>
+        <p>
+          You can ask us to correct or delete the information you have sent us by emailing
+          <a href={`mailto:${site.contact.email}`} class="font-semibold text-gold-600 underline">{site.contact.email}</a>.
+        </p>
+
+        <h2>Contact</h2>
+        <p>
+          {site.contact.person}, {site.name}<br />
+          {site.contact.phoneDisplay}<br />
+          {site.contact.email}
+        </p>
+      </div>
+    </div>
+  </section>
+</Layout>

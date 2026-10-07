@@ -1,0 +1,197 @@
+---
+import { Image } from 'astro:assets';
+import banner from '../assets/images/biz-machinery.jpg';
+import potential from '../assets/images/hero-solar.jpg';
+import Web3Form from '../components/forms/Web3Form.astro';
+import Button from '../components/ui/Button.astro';
+import Icon, { type IconName } from '../components/ui/Icon.astro';
+import PageBanner from '../components/ui/PageBanner.astro';
+import SectionHeading from '../components/ui/SectionHeading.astro';
+import { businesses } from '../data/businesses';
+import { site } from '../data/site';
+import Layout from '../layouts/Layout.astro';
+
+if (!site.pages.careers) return Astro.redirect('/contact');
+
+// Draft copy for client approval
+const chapters: { icon: IconName; title: string; text: string }[] = [
+  {
+    icon: 'trending-up',
+    title: 'Grow Your Career',
+    text: 'As our businesses grow, so do the people in them. Take on responsibility, learn on the job and build skills that last.',
+  },
+  {
+    icon: 'users',
+    title: 'Our Culture',
+    text: 'We value honest work, fair dealing and respect for everyone on the team, whatever their role.',
+  },
+  {
+    icon: 'sprout',
+    title: 'Make a Difference',
+    text: 'Your work supports farmers, feeds families and helps build local industry and employment.',
+  },
+];
+
+const interests = [...businesses.map((b) => b.title), 'Accounts & Administration', 'Sales & Marketing', 'Other'];
+const experience = ['Fresher', '1 to 3 years', '3 to 5 years', 'More than 5 years'];
+---
+
+<Layout
+  title="Careers"
+  description="Work with BBC Group India, a group building across agriculture, food processing, energy and industry. Send us your details."
+  overlayHeader
+>
+  <PageBanner
+    title="Grow with BBC Group India"
+    text="Join a group that is building for the long term."
+    image={banner}
+    crumbs={[{ label: 'Careers' }]}
+  />
+
+  {/* Dark card overlapping the banner, where the reference site has its job search */}
+  <section class="pb-16 lg:pb-20">
+    <div class="container-site">
+      <div
+        class="relative z-10 -mt-10 flex flex-wrap items-center justify-between gap-8 rounded-bl-[3.5rem] rounded-tr-[3.5rem] bg-paddy-900 p-8 text-white shadow-2xl sm:p-12"
+        data-reveal
+      >
+        <div class="max-w-2xl">
+          <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">Interested in working with us?</h2>
+          <p class="mt-3 text-lg text-white/80">
+            Send us your details. We will get in touch when there is an opportunity that suits you.
+          </p>
+        </div>
+        <Button href="#apply">Fill the Enquiry Form</Button>
+      </div>
+    </div>
+  </section>
+
+  <section class="pb-20 lg:pb-28">
+    <div class="container-site grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
+      <div>
+        <SectionHeading eyebrow="Life at BBC Group India" title="Discover Your Potential in a Growing Group" />
+        <div class="mt-8 space-y-5 text-lg leading-relaxed text-ink/80" data-stagger>
+          <p>
+            BBC Group India works across agriculture, rice processing, renewable energy, brick manufacturing,
+            building construction supplies and agricultural machinery. That range means real variety in the work
+            and room to grow.
+          </p>
+          <p>
+            We look for people who take ownership, work with care and want to build something lasting alongside
+            us.
+          </p>
+        </div>
+      </div>
+      <div class="relative" data-reveal="right">
+        <div class="absolute -right-4 -top-4 h-2/3 w-2/3 border border-gold-500" aria-hidden="true"></div>
+        <div class="relative aspect-[3/2] overflow-hidden rounded-bl-[3.5rem] rounded-tr-[3.5rem]">
+          <Image
+            src={potential}
+            alt=""
+            widths={[640, 960, 1600]}
+            sizes="(min-width: 1024px) 46vw, 100vw"
+            class="h-[116%] w-full object-cover"
+            data-parallax
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-ivory py-20 lg:py-28">
+    <div class="container-site">
+      <SectionHeading eyebrow="Why work with us" title="What You Can Expect" align="center" />
+      <ul class="mt-14 grid gap-6 md:grid-cols-3" data-stagger>
+        {
+          chapters.map((chapter) => (
+            <li class="group/item rounded border border-paddy-900/10 bg-white p-10 transition-[translate,box-shadow,border-color] duration-500 ease-brand hover:-translate-y-1.5 hover:border-gold-500 hover:shadow-xl">
+              <Icon name={chapter.icon} class="size-10 text-gold-600" />
+              <h3 class="mt-6 text-xl font-semibold text-paddy-900">{chapter.title}</h3>
+              <span class="mt-3 block h-0.5 w-10 bg-gold-500 transition-[width] duration-500 ease-brand group-hover/item:w-20" />
+              <p class="mt-4 leading-relaxed text-ink/70">{chapter.text}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section id="apply" class="py-20 lg:py-28">
+    <div class="container-site grid gap-12 lg:grid-cols-[1fr_1.4fr] lg:gap-20">
+      <div>
+        <SectionHeading eyebrow="Careers enquiry" title="Tell Us About Yourself" />
+        <p class="mt-6 text-lg leading-relaxed text-ink/75" data-reveal>
+          Fill in the form and our team will contact you. There is no account to create and nothing to log in to.
+        </p>
+        <ul class="mt-8 space-y-4" data-stagger>
+          <li>
+            <a href={site.contact.phoneHref} class="flex items-center gap-3 font-semibold text-paddy-900 hover:text-gold-600">
+              <Icon name="phone" class="size-5 text-gold-600" />
+              {site.contact.phoneDisplay}
+            </a>
+          </li>
+          <li>
+            <a
+              href={`mailto:${site.contact.email}`}
+              class="flex items-center gap-3 break-all font-semibold text-paddy-900 hover:text-gold-600"
+            >
+              <Icon name="mail" class="size-5 shrink-0 text-gold-600" />
+              {site.contact.email}
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="rounded border-t-2 border-gold-500 bg-ivory p-8 sm:p-10" data-reveal="right">
+        <Web3Form
+          subject="New careers enquiry from the website"
+          submitLabel="Send My Details"
+          successMessage="Thank you. Your details have been sent and we will contact you if there is a suitable opportunity."
+        >
+          <div class="grid gap-6 sm:grid-cols-2">
+            <div>
+              <label for="career-name" class="field-label">Full name *</label>
+              <input id="career-name" name="name" type="text" required autocomplete="name" class="field" />
+            </div>
+            <div>
+              <label for="career-phone" class="field-label">Phone *</label>
+              <input id="career-phone" name="phone" type="tel" required autocomplete="tel" class="field" />
+            </div>
+            <div>
+              <label for="career-email" class="field-label">Email *</label>
+              <input id="career-email" name="email" type="email" required autocomplete="email" class="field" />
+            </div>
+            <div>
+              <label for="career-city" class="field-label">City / location</label>
+              <input id="career-city" name="city" type="text" autocomplete="address-level2" class="field" />
+            </div>
+            <div>
+              <label for="career-interest" class="field-label">Area of interest *</label>
+              <select id="career-interest" name="area_of_interest" required class="field">
+                <option value="">Please select</option>
+                {interests.map((interest) => <option>{interest}</option>)}
+              </select>
+            </div>
+            <div>
+              <label for="career-experience" class="field-label">Experience *</label>
+              <select id="career-experience" name="experience" required class="field">
+                <option value="">Please select</option>
+                {experience.map((level) => <option>{level}</option>)}
+              </select>
+            </div>
+          </div>
+          <div>
+            <label for="career-message" class="field-label">About you *</label>
+            <textarea
+              id="career-message"
+              name="message"
+              rows="5"
+              required
+              placeholder="Your qualification, current work and the kind of role you are looking for"
+              class="field"></textarea>
+          </div>
+        </Web3Form>
+      </div>
+    </div>
+  </section>
+</Layout>

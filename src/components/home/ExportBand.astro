@@ -1,0 +1,54 @@
+---
+import { Image } from 'astro:assets';
+import port from '../../assets/images/export-port.jpg';
+import Button from '../ui/Button.astro';
+import RouteMap from '../ui/RouteMap.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+
+const marquee = ['Grown in India', 'Milled in India', 'Packed with Care', 'Shipped to the World'];
+---
+
+<section class="relative overflow-hidden bg-paddy-900 text-white">
+  <Image
+    src={port}
+    alt=""
+    widths={[768, 1280, 1920]}
+    sizes="100vw"
+    class="absolute inset-0 h-[120%] w-full object-cover"
+    data-parallax
+  />
+  <div class="absolute inset-0 bg-linear-to-r from-paddy-900 via-paddy-900/90 to-paddy-900/55"></div>
+
+  <div class="container-site relative grid items-center gap-12 py-24 lg:grid-cols-2 lg:py-32">
+    <div>
+      <SectionHeading eyebrow="Make in India. Export from India." title="From Indian Farms to Global Markets" tone="dark" />
+      <p class="mt-6 max-w-xl text-lg leading-relaxed text-white/85" data-reveal data-reveal-delay="0.1">
+        We take the strength of India's agricultural production to consumers and businesses across global markets,
+        contributing to India's growing position in the international food and rice trade.
+      </p>
+      <div class="mt-9 flex flex-wrap gap-4" data-reveal data-reveal-delay="0.2">
+        <Button href="/exports">Explore Our Export Business</Button>
+        <Button href="/contact?interest=export" variant="outline-light" arrow={false}>Send an Export Enquiry</Button>
+      </div>
+    </div>
+
+    <RouteMap class="mx-auto max-w-lg" />
+  </div>
+
+  <div class="relative overflow-hidden border-t border-white/10 py-5" aria-hidden="true">
+    <div class="marquee flex w-max">
+      {
+        [0, 1].map(() => (
+          <div class="flex shrink-0">
+            {[...marquee, ...marquee].map((phrase) => (
+              <span class="flex items-center gap-8 pr-8 font-serif text-2xl italic text-white/70">
+                {phrase}
+                <span class="text-sm not-italic text-gold-500">★</span>
+              </span>
+            ))}
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
