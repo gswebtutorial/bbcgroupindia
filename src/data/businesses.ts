@@ -81,7 +81,7 @@ export const businesses: Business[] = [
       {
         icon: 'layers',
         title: 'By-products',
-        text: 'Rice bran, husk and broken rice are recovered during milling and put to productive use.',
+        text: 'Rice bran, husk and broken rice are recovered during milling and put to productive use. Fly ash from the mill goes into our brick manufacturing.',
       },
       {
         icon: 'globe',
@@ -132,12 +132,18 @@ export const businesses: Business[] = [
     summary:
       'Our brick manufacturing business serves the construction and infrastructure sector with quality building materials.',
     cta: 'Explore Brick Manufacturing',
-    tagline: 'Quality building materials for construction and infrastructure.',
+    tagline: 'Bricks made using fly ash from our own rice mill.',
     overview: [
       'Good construction starts with good materials. Our brick manufacturing business supplies builders, contractors and infrastructure projects with bricks they can depend on.',
+      'The fly ash generated at our rice mill is used as a raw material in our bricks. What would otherwise be waste from one business becomes a building material in another.',
       'We focus on consistent quality and reliable supply so that work on site keeps moving.',
     ],
     whatWeDo: [
+      {
+        icon: 'leaf',
+        title: 'Fly Ash from Our Rice Mill',
+        text: 'Fly ash generated during rice processing is reused in brick making, so less goes to waste across the Group.',
+      },
       {
         icon: 'layers',
         title: 'Quality Bricks',

@@ -1,0 +1,86 @@
+---
+// The main business enquiry form. Delivered through Web3Form to the client's inbox.
+import { businesses } from '../../data/businesses';
+import Web3Form from './Web3Form.astro';
+
+interface Props {
+  /** Pre-selected interest: a business slug, or "export". A ?interest= in the URL overrides it. */
+  interest?: string;
+  /** Unique prefix for field ids when more than one form could be on a page */
+  id?: string;
+}
+
+const { interest, id = 'enquiry' } = Astro.props;
+
+// `key` is what links and the ?interest= parameter use; `label` is what the client reads in the email
+const options = [
+  { key: 'rice-processing', label: 'Rice – Domestic' },
+  { key: 'export', label: 'Rice – Export' },
+  ...businesses.filter((b) => b.slug !== 'rice-processing').map((b) => ({ key: b.slug, label: b.title })),
+  { key: 'other', label: 'Other' },
+];
+---
+
+<Web3Form subject="New website enquiry">
+  <div class="grid gap-6 sm:grid-cols-2" data-enquiry-fields>
+    <div>
+      <label for={`${id}-name`} class="field-label">Full name *</label>
+      <input id={`${id}-name`} name="name" type="text" required autocomplete="name" class="field" />
+    </div>
+    <div>
+      <label for={`${id}-company`} class="field-label">Company / organisation</label>
+      <input id={`${id}-company`} name="company" type="text" autocomplete="organization" class="field" />
+    </div>
+    <div>
+      <label for={`${id}-phone`} class="field-label">Phone (with country code) *</label>
+      <input id={`${id}-phone`} name="phone" type="tel" required autocomplete="tel" class="field" />
+    </div>
+    <div>
+      <label for={`${id}-email`} class="field-label">Email *</label>
+      <input id={`${id}-email`} name="email" type="email" required autocomplete="email" class="field" />
+    </div>
+    <div>
+      <label for={`${id}-interest`} class="field-label">I am interested in *</label>
+      <select id={`${id}-interest`} name="interest" required class="field" data-interest>
+        <option value="">Please select</option>
+        {
+          options.map((option) => (
+            <option value={option.label} data-key={option.key} selected={option.key === interest}>
+              {option.label}
+            </option>
+          ))
+        }
+      </select>
+    </div>
+    <div>
+      <label for={`${id}-country`} class="field-label">Country</label>
+      <input id={`${id}-country`} name="country" type="text" autocomplete="country-name" class="field" />
+    </div>
+    <div class="sm:col-span-2">
+      <label for={`${id}-quantity`} class="field-label">Quantity / requirement</label>
+      <input
+        id={`${id}-quantity`}
+        name="quantity"
+        type="text"
+        placeholder="For example: 25 tonnes per month"
+        class="field"
+      />
+    </div>
+  </div>
+  <div>
+    <label for={`${id}-message`} class="field-label">Message *</label>
+    <textarea id={`${id}-message`} name="message" rows="5" required class="field"></textarea>
+  </div>
+</Web3Form>
+
+<script>
+  // Links such as /contact?interest=export#enquiry arrive with the right option chosen
+  document.addEventListener('astro:page-load', () => {
+    const key = new URLSearchParams(window.location.search).get('interest');
+    if (!key) return;
+    document.querySelectorAll<HTMLSelectElement>('select[data-interest]').forEach((select) => {
+      const match = [...select.options].find((option) => option.dataset.key === key);
+      if (match) select.value = match.value;
+    });
+  });
+</script>

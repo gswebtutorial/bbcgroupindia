@@ -78,6 +78,7 @@ const accessKey = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
         event.preventDefault();
         const data = Object.fromEntries(new FormData(form));
         delete data.redirect;
+        if (data.interest) data.subject = `${data.subject} – ${data.interest}`;
 
         if (!data.access_key) {
           show(`This form is not connected yet. ${fallback}`, false);

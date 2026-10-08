@@ -420,8 +420,8 @@ The build is split into seven tasks, done and reviewed one at a time.
 | 3. Businesses | Overview page, six vertical pages from one template, rice flagship extras | Done |
 | 4. Exports + Sustainability | `/exports`, Sustainability & National Commitments | Done |
 | 5. Corporate pages | About, Infrastructure, Contact, Leadership and Careers (switched off), Privacy, 404 | Done |
-| 6. Enquiry forms | Web3Forms form + drawer, thank-you page, delivery test | Next |
-| 7. SEO, QA, launch | Metadata, sitemap, structured data, performance, accessibility, hosting | |
+| 6. Enquiry forms | Web3Forms enquiry form, thank-you page, delivery test | Built; delivery test waits for the Web3Forms key |
+| 7. SEO, QA, launch | Metadata, sitemap, structured data, performance, accessibility, hosting | Next |
 
 ### Detailed steps
 
@@ -459,8 +459,9 @@ The build is split into seven tasks, done and reviewed one at a time.
 
 ### Phase 5 — Forms
 - [ ] 25. Get the Web3Forms access key (§6.1).
-- [ ] 26. Build `EnquiryForm` and `EnquiryDrawer`; wire into Contact, Exports, vertical pages, header.
-- [ ] 27. `/thank-you` page; test delivery from every form.
+- [x] 26. Build `EnquiryForm`; on Contact and Exports, with business pages linking to it pre-selected. (The slide-in drawer from the header was not built.)
+- [x] 27. `/thank-you` page.
+- [ ] 27a. Test delivery from every form once the key is in `.env`.
 
 ### Phase 6 — SEO, performance, accessibility
 - [ ] 28. Unique title/description per page; Organization + LocalBusiness JSON-LD (name, address, phone, Google profile as `sameAs`); `sitemap.xml`, `robots.txt`.

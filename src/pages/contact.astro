@@ -1,6 +1,6 @@
 ---
 import banner from '../assets/images/biz-agriculture.jpg';
-import Button from '../components/ui/Button.astro';
+import EnquiryForm from '../components/forms/EnquiryForm.astro';
 import Icon from '../components/ui/Icon.astro';
 import PageBanner from '../components/ui/PageBanner.astro';
 import SectionHeading from '../components/ui/SectionHeading.astro';
@@ -88,16 +88,12 @@ const { contact } = site;
         </ul>
       </div>
 
-      {/* The enquiry form (Task 6) replaces this card */}
-      <div id="enquiry" class="self-start rounded border-t-2 border-gold-500 bg-ivory p-8 sm:p-12" data-reveal="right">
+      <div id="enquiry" class="self-start rounded border-t-2 border-gold-500 bg-ivory p-8 sm:p-10" data-reveal="right">
         <h2 class="text-2xl font-semibold text-paddy-900">Send an Enquiry</h2>
-        <p class="mt-3 text-lg leading-relaxed text-ink/75">
-          Tell us what you need and which business it relates to. Email or call us directly.
+        <p class="mb-8 mt-3 leading-relaxed text-ink/75">
+          Tell us what you need and which business it relates to. We will get back to you.
         </p>
-        <div class="mt-8 flex flex-wrap gap-4">
-          <Button href={`mailto:${contact.email}?subject=Website enquiry`} variant="dark">Email Us</Button>
-          <Button href={contact.phoneHref} variant="outline" arrow={false}>Call {contact.phoneDisplay}</Button>
-        </div>
+        <EnquiryForm />
       </div>
     </div>
   </section>
