@@ -18,4 +18,8 @@ All photos below are stock images from Unsplash, used under the [Unsplash Licens
 | export-port.jpg | Export band | https://images.unsplash.com/photo-1691591765923-3bd6f12f4209 |
 | infra-warehouse.jpg | Infrastructure teaser | https://images.unsplash.com/photo-1774946103680-3d34a461a581 |
 | sustain-farmer.jpg | Sustainability band | https://images.unsplash.com/photo-1770892123242-c876a0a343f5 |
-| about-paddy-hands.jpg | About page, "Who we are" | https://images.unsplash.com/photo-1710149484964-d966b771c204 |
+| about-paddy-drying.jpg | About page, "Who we are" | https://images.unsplash.com/photo-1691693812002-0e7bf1c18810 |
+| leadership-team.jpg | Leadership page banner | https://images.unsplash.com/photo-1758518727707-b023e285b709 |
+| careers-office.jpg | Careers page banner | https://images.unsplash.com/photo-1715593949273-09009558300a |
+| careers-workspace.jpg | Careers page, "Discover Your Potential" block | https://images.unsplash.com/photo-1497366811353-6870744d04b2 |
+| contact-silos-trucks.jpg | Contact page banner | https://images.unsplash.com/photo-1762291323534-b265fc616412 |

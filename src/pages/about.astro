@@ -1,6 +1,6 @@
 ---
 import { Image } from 'astro:assets';
-import paddy from '../assets/images/about-paddy-hands.jpg';
+import paddy from '../assets/images/about-paddy-drying.jpg';
 import banner from '../assets/images/hero-rice.jpg';
 import Icon, { type IconName } from '../components/ui/Icon.astro';
 import PageBanner from '../components/ui/PageBanner.astro';
@@ -62,10 +62,10 @@ const values: { icon: IconName; title: string; text: string }[] = [
         <div class="relative aspect-[4/5] overflow-hidden rounded">
           <Image
             src={paddy}
-            alt="Hands pouring freshly harvested paddy"
+            alt="Workers spreading paddy out to dry in the sun"
             widths={[480, 800, 1200]}
             sizes="(min-width: 1024px) 40vw, 100vw"
-            class="h-[116%] w-full object-cover object-[42%_center]"
+            class="h-[116%] w-full object-cover"
             data-parallax
           />
         </div>
