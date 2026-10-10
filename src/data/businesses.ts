@@ -5,7 +5,7 @@ import construction from '../assets/images/biz-construction.jpg';
 import machinery from '../assets/images/biz-machinery.jpg';
 import rice from '../assets/images/biz-rice.jpg';
 import solar from '../assets/images/biz-solar.jpg';
-import type { IconName } from '../components/ui/Icon.astro';
+import type { IconName } from '../components/ui/icons';
 
 export type Business = {
   slug: string;

@@ -2,7 +2,7 @@ import heroExport from '../assets/images/hero-export.jpg';
 import heroPaddy from '../assets/images/hero-paddy.jpg';
 import heroRice from '../assets/images/hero-rice.jpg';
 import heroSolar from '../assets/images/hero-solar.jpg';
-import type { IconName } from '../components/ui/Icon.astro';
+import type { IconName } from '../components/ui/icons';
 
 export const heroSlides = [
   {
