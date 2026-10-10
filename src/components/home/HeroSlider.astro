@@ -6,7 +6,7 @@ import Button from '../ui/Button.astro';
 
 <section
   id="hero"
-  class="relative flex h-svh max-h-[1080px] min-h-[680px] items-end overflow-hidden bg-paddy-900 text-white lg:items-center"
+  class="relative flex flex-col overflow-hidden bg-paddy-900 text-white lg:h-svh lg:max-h-[1080px] lg:min-h-[680px] lg:flex-row lg:items-center"
   aria-roledescription="carousel"
   aria-label="Highlights"
 >
@@ -14,7 +14,7 @@ import Button from '../ui/Button.astro';
   {
     heroSlides.map((slide, i) => (
       <div
-        class="absolute inset-x-0 top-0 h-[55%] opacity-0 transition-opacity duration-[1200ms] ease-brand data-active:opacity-100 lg:inset-y-0 lg:left-[38%] lg:h-auto"
+        class="absolute inset-x-0 top-0 h-[60svh] min-h-[400px] opacity-0 transition-opacity duration-[1200ms] ease-brand data-active:opacity-100 lg:inset-y-0 lg:left-[38%] lg:h-auto lg:min-h-0"
         data-hero-image
         data-active={i === 0 ? '' : undefined}
       >
@@ -33,9 +33,12 @@ import Button from '../ui/Button.astro';
 
   {/* Angled panel on desktop; on small screens the text panel below the photo does this job */}
   <div class="panel-angled absolute inset-y-0 left-0 hidden w-[66%] bg-paddy-900 lg:block"></div>
-  <div class="absolute inset-x-0 top-0 h-48 bg-linear-to-b from-paddy-900/95 via-paddy-900/55 to-transparent"></div>
+  <div class="absolute inset-x-0 top-0 h-28 bg-linear-to-b from-paddy-900/75 to-transparent lg:h-48 lg:from-paddy-900/95 lg:via-paddy-900/55"></div>
 
-  <div class="panel-slant-top relative w-full bg-paddy-900 pb-20 pt-20 lg:bg-transparent lg:pb-0 lg:pt-28 lg:[clip-path:none]">
+  {/* small screens: reserves the space the photo occupies above the text panel */}
+  <div class="h-[60svh] min-h-[400px] shrink-0 lg:hidden"></div>
+
+  <div class="relative -mt-6 w-full rounded-t-3xl bg-paddy-900 pb-20 pt-10 lg:mt-0 lg:rounded-none lg:bg-transparent lg:pb-0 lg:pt-28">
    <div class="container-site">
     <div class="grid max-w-2xl">
       {
@@ -54,7 +57,7 @@ import Button from '../ui/Button.astro';
               <Heading class="mt-4 text-3xl font-semibold leading-[1.1] tracking-tight sm:text-5xl lg:text-6xl">
                 {slide.title[0]}{' '}<span class="text-gold-300">{slide.title[1]}</span>{' '}{slide.title[2]}
               </Heading>
-              <p class="mt-5 line-clamp-3 max-w-xl leading-relaxed text-white/85 sm:line-clamp-none sm:text-lg lg:mt-6">{slide.text}</p>
+              <p class="mt-5 max-w-xl leading-relaxed text-white/85 sm:text-lg lg:mt-6">{slide.text}</p>
               <div class="mt-7 flex flex-wrap gap-4 lg:mt-9">
                 <Button href={slide.primary.href}>{slide.primary.label}</Button>
                 {slide.secondary && (
