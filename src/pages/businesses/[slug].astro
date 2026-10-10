@@ -29,7 +29,6 @@ const others = [1, 2, 3].map((offset) => businesses[(index + offset) % businesse
     text={business.tagline}
     image={business.image}
     crumbs={[{ label: 'Our Businesses', href: '/businesses' }, { label: business.title }]}
-    transitionName={`business-${business.slug}`}
   />
 
   <section class="py-20 lg:py-28">

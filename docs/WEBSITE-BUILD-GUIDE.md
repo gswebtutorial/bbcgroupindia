@@ -404,7 +404,7 @@ src/
 ### 7.4 Notes for implementation
 
 - With `<ClientRouter />`, page scripts must re-initialise on the `astro:page-load` event and clean up GSAP ScrollTriggers / Lenis on `astro:before-swap`.
-- Use `transition:persist` on the header and `transition:name` on business-tile image → page-banner image for a shared-element morph.
+- Do not put `transition:name` on banner or card images. It lifts the photo into its own layer during a page change, so the full photo shows first and the angled panel only covers it when the transition ends. (Tried and removed.)
 - Run the dev server with `astro dev --background` (see `CLAUDE.md`).
 
 ---

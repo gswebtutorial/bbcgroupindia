@@ -8,11 +8,9 @@ interface Props {
   image: ImageMetadata;
   /** Trail after "Home", e.g. [{ label: 'Our Businesses', href: '/businesses' }] */
   crumbs?: { label: string; href?: string }[];
-  /** Shared-element name so a card photo can morph into this banner */
-  transitionName?: string;
 }
 
-const { title, text, image, crumbs = [], transitionName } = Astro.props;
+const { title, text, image, crumbs = [] } = Astro.props;
 ---
 
 <section class="relative flex min-h-[520px] items-end overflow-hidden bg-paddy-900 text-white lg:min-h-[580px]">
@@ -25,7 +23,6 @@ const { title, text, image, crumbs = [], transitionName } = Astro.props;
       loading="eager"
       fetchpriority="high"
       class="size-full object-cover"
-      transition:name={transitionName}
     />
   </div>
   <div class="absolute inset-0 bg-paddy-900/80 lg:hidden"></div>
