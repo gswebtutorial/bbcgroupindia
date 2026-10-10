@@ -13,8 +13,9 @@ interface Props {
 const { title, text, image, crumbs = [] } = Astro.props;
 ---
 
-<section class="relative flex min-h-[520px] items-end overflow-hidden bg-paddy-900 text-white lg:min-h-[580px]">
-  <div class="absolute inset-0 lg:left-[40%]">
+{/* Small screens: photo on top, text panel below it. Desktop: photo right, angled panel left. */}
+<section class="relative flex flex-col overflow-hidden bg-paddy-900 text-white lg:min-h-[580px] lg:flex-row lg:items-end">
+  <div class="relative h-80 lg:absolute lg:inset-0 lg:left-[40%] lg:h-auto">
     <Image
       src={image}
       alt=""
@@ -25,11 +26,11 @@ const { title, text, image, crumbs = [] } = Astro.props;
       class="size-full object-cover"
     />
   </div>
-  <div class="absolute inset-0 bg-paddy-900/80 lg:hidden"></div>
   <div class="panel-angled absolute inset-y-0 left-0 hidden w-[64%] bg-paddy-900 lg:block"></div>
   <div class="absolute inset-x-0 top-0 h-48 bg-linear-to-b from-paddy-900/95 via-paddy-900/55 to-transparent"></div>
 
-  <div class="container-site relative pb-16 pt-44 lg:pb-20">
+  <div class="panel-slant-top relative -mt-14 w-full bg-paddy-900 pb-12 pt-20 lg:mt-0 lg:bg-transparent lg:pb-20 lg:pt-44 lg:[clip-path:none]">
+   <div class="container-site">
     <nav aria-label="Breadcrumb" class="text-sm text-white/70" data-reveal>
       <ol class="flex flex-wrap items-center gap-2">
         <li><a href="/" class="hover:text-gold-300">Home</a></li>
@@ -63,5 +64,6 @@ const { title, text, image, crumbs = [] } = Astro.props;
         </p>
       )
     }
+   </div>
   </div>
 </section>
