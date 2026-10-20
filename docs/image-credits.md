@@ -10,9 +10,9 @@ All photos below are stock images from Unsplash, used under the [Unsplash Licens
 | hero-solar.jpg | Hero slide 4 | https://images.unsplash.com/photo-1509391366360-2e959784a276 |
 | intro-farmer.jpg | Home intro | https://images.unsplash.com/photo-1528693404014-b13ebe6e723e |
 | biz-agriculture.jpg | Agriculture & Farms tile | https://images.unsplash.com/photo-1666545743813-e692fb2b2430 |
-| biz-rice.jpg | Rice & Food Processing tile | https://images.unsplash.com/photo-1586201375761-83865001e31c |
+| biz-rice.jpg | Rice & Food Processing tile and banner | Supplied by the agency (Welfare Infotech), 20 Oct 2026; not from Unsplash |
 | biz-solar.jpg | Renewable Energy tile | https://images.unsplash.com/photo-1629726797843-618688139f5a |
-| biz-bricks.jpg | Brick Manufacturing tile | https://images.unsplash.com/photo-1769104397835-2297e730f361 |
+| biz-bricks.jpg | Brick Manufacturing tile and banner | Supplied by the agency (Welfare Infotech), 20 Oct 2026; not from Unsplash |
 | biz-construction.jpg | Building Construction Supplies tile | https://images.unsplash.com/photo-1623428454598-1bfe414bac03 |
 | biz-machinery.jpg | Agricultural Machinery tile | https://images.unsplash.com/photo-1717702576954-c07131c54169 |
 | export-port.jpg | Export band | https://images.unsplash.com/photo-1691591765923-3bd6f12f4209 |
