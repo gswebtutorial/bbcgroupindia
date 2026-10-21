@@ -121,12 +121,16 @@ const steps = [
         </p>
         <ul class="mt-8 space-y-4" data-stagger>
           <li class="text-lg font-semibold text-paddy-900">{site.contact.person}</li>
-          <li>
-            <a href={site.contact.phoneHref} class="flex items-center gap-3 hover:text-gold-600">
-              <Icon name="phone" class="size-5 text-gold-600" />
-              {site.contact.phoneDisplay}
-            </a>
-          </li>
+          {
+            site.contact.phones.map((phone) => (
+              <li>
+                <a href={phone.href} class="flex items-center gap-3 hover:text-gold-600">
+                  <Icon name="phone" class="size-5 text-gold-600" />
+                  {phone.display}
+                </a>
+              </li>
+            ))
+          }
           <li>
             <a href={`mailto:${site.contact.email}`} class="flex items-center gap-3 break-all hover:text-gold-600">
               <Icon name="mail" class="size-5 shrink-0 text-gold-600" />

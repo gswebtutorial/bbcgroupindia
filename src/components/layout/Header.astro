@@ -157,10 +157,14 @@ const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWit
     </ul>
   </nav>
   <div class="container-site space-y-3 border-t border-white/10 py-6 text-sm">
-    <a href={site.contact.phoneHref} class="flex items-center gap-3">
-      <Icon name="phone" class="size-4 text-gold-300" />
-      {site.contact.phoneDisplay}
-    </a>
+    {
+      site.contact.phones.map((phone) => (
+        <a href={phone.href} class="flex items-center gap-3">
+          <Icon name="phone" class="size-4 text-gold-300" />
+          {phone.display}
+        </a>
+      ))
+    }
     <a href={`mailto:${site.contact.email}`} class="flex items-center gap-3">
       <Icon name="mail" class="size-4 text-gold-300" />
       {site.contact.email}

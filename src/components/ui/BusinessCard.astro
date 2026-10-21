@@ -22,7 +22,7 @@ const { business, label } = Astro.props;
       class="size-full object-cover transition-transform duration-[900ms] ease-brand group-hover/card:scale-108"
     />
     <div class="absolute inset-0 bg-linear-to-t from-paddy-900/70 via-transparent to-transparent"></div>
-    {label && <span class="absolute bottom-4 left-5 font-serif text-4xl font-semibold text-white/90">{label}</span>}
+    {label && <span class="absolute bottom-4 left-5 font-sans text-4xl font-semibold text-white/90">{label}</span>}
   </div>
   <h3 class="mt-5 text-xl font-semibold text-paddy-900">{business.title}</h3>
   <p class="mt-2 leading-relaxed text-ink/70">{business.summary}</p>

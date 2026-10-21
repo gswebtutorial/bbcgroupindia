@@ -127,7 +127,7 @@ All motion is disabled under `prefers-reduced-motion`, and Lenis is off on touch
 
 Rules:
 - Stock photos are illustrative. Do not caption a stock photo as "our mill" or "our farm".
-- Kubota: use only generic tractor imagery and the plain text "Authorized Kubota Dealer" until the client confirms what Kubota's dealer guidelines allow. No Kubota logo or product photos from their site.
+- Agricultural equipment: the client asked (21 Oct 2026) that no equipment brand be named or shown anywhere on the site. Use generic farm-equipment imagery only.
 - Government initiatives: do not use the Make in India lion logo, the national emblem or ministry logos. Use our own icons and plain text.
 - Keep a credits sheet (`docs/image-credits.md`) with source URL and licence for every stock file.
 
@@ -174,7 +174,7 @@ Every slot has a fixed aspect ratio, so swapping in the client's photo later nev
 /businesses/renewable-energy        Renewable Energy
 /businesses/brick-manufacturing     Brick Manufacturing
 /businesses/construction-supplies   Building Construction Supplies
-/businesses/agricultural-machinery  Agricultural Machinery (Kubota)
+/businesses/agricultural-machinery  Agricultural Equipment & Technology
 /exports                            From Indian Farms to Global Markets   ← new
 /infrastructure                     Infrastructure
 /sustainability                     Sustainability & National Commitments
@@ -242,7 +242,7 @@ Counters: **6** Business Verticals · **[__]** Years of Operation · **[__]** TP
 | Renewable Energy | We are developing our presence in renewable energy with a focus on solar power and clean energy solutions. | Explore Renewable Energy → | Solar panels |
 | Brick Manufacturing | Our brick manufacturing business serves the construction and infrastructure sector with quality building materials. | Explore Brick Manufacturing → | Stacked bricks |
 | Building Construction Supplies | Our building construction supply business provides hardware and related materials for construction, infrastructure and building projects. | Explore Construction Supplies → | Hardware / steel |
-| Agricultural Machinery | BBC Group India is an authorized dealer of Kubota, a Japanese technology-based tractor company, providing reliable agricultural machinery and tractor solutions to farmers and agricultural customers. | Explore Agricultural Machinery → | Tractor in field (generic) |
+| Agricultural Equipment & Technology | BBC Group India deals in agricultural equipment and technologies that provide end-to-end farming solutions, helping farmers and agricultural customers work more efficiently from land preparation to harvest. (Replaced the Kubota wording on client instruction, 21 Oct 2026.) | Explore Agricultural Equipment → | Farm equipment in a field (generic, no brand) |
 
 **4. From Indian Farms to Global Markets** (full-bleed dark image, route-map SVG, destinations marquee)
 
@@ -497,7 +497,7 @@ Nothing here blocks starting the build; each item unlocks a section.
 **Group**
 9. Year each business started; real numbers for the counters (years, capacity, employees, acres).
 10. Which green practices are actually in place (husk boiler, solar kW, water reuse, plantation).
-11. Kubota dealership: showroom address and what branding Kubota allows.
+11. Agricultural equipment: showroom address and the range of equipment and technologies offered (no brand names on the site).
 12. Brick plant location and capacity.
 13. Leadership names, designations, photos and a short message from the head of the group.
 14. Any phone photos or videos of the mill, godown, farms, trucks, showroom and team.
@@ -535,3 +535,25 @@ Modelled on https://www.olamagri.com/careers, without its job search, job alerts
 - Careers enquiry form: name, phone, email, city, area of interest, experience, about you. Delivered by Web3Forms like every other form (`src/components/forms/Web3Form.astro`). No CV upload; no accounts.
 
 Left out because we have no real material for them: employee stories, employer awards and colleague quotes. They can be added when the client has genuine ones.
+
+## 14. Building Construction Supplies: hidden (21 Oct 2026)
+
+The client asked for this business to be taken off the site for now because of an expo at their plant. They will ask for it back after the expo. The site currently shows **five** businesses.
+
+**How it is hidden:** `src/data/businesses.ts` keeps the full entry (copy, image, activities) but marks it `enabled: false`. Everything reads the filtered `businesses` list, so its page (`/businesses/construction-supplies`), nav dropdown item, footer link, home tile, Our Businesses row, "other businesses" cards and enquiry-form option are all gone.
+
+**To bring it back:**
+
+1. In `src/data/businesses.ts`, delete the `enabled: false` line (and its comment) on the `construction-supplies` entry.
+2. Put the phrase back into the copy that lists the businesses:
+
+| File | Current text | Restore to |
+|---|---|---|
+| `src/data/home.ts` (hero slide 1) | …brick manufacturing and agricultural machinery. | …brick manufacturing, building construction supplies and agricultural machinery. |
+| `src/data/site.ts` (site description) | same as above | same as above |
+| `src/pages/businesses/index.astro` (page description) | same as above | same as above |
+| `src/components/home/IntroStats.astro` | …brick manufacturing and agricultural machinery, our businesses… | …brick manufacturing, building construction supplies and agricultural machinery, our businesses… |
+| `src/pages/careers.astro` | …brick manufacturing and agricultural machinery. That range… | …brick manufacturing, building construction supplies and agricultural machinery. That range… |
+| `src/pages/about.astro` | …renewable energy, manufacturing and agricultural machinery. | …renewable energy, manufacturing, construction supply and agricultural machinery. |
+
+3. Rebuild and check that `/businesses/construction-supplies` exists and the home grid shows six tiles.

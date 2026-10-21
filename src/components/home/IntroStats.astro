@@ -27,8 +27,8 @@ import SectionHeading from '../ui/SectionHeading.astro';
       <div class="mt-8 space-y-5 text-lg leading-relaxed text-ink/80" data-stagger>
         <p>BBC Group India brings together businesses operating across multiple sectors of the Indian economy.</p>
         <p>
-          From agriculture and rice processing to renewable energy, brick manufacturing, building construction
-          supplies and agricultural machinery, our businesses are connected by a common commitment to operational
+          From agriculture and rice processing to renewable energy, brick manufacturing and agricultural
+          machinery, our businesses are connected by a common commitment to operational
           excellence, reliability and sustainable growth.
         </p>
         <p>
@@ -48,7 +48,7 @@ import SectionHeading from '../ui/SectionHeading.astro';
         <dl class="grid grid-cols-2 gap-8 border-t border-paddy-900/15 pt-12 lg:grid-cols-4" data-stagger>
           {stats.map((stat) => (
             <div>
-              <dd class="font-serif text-6xl font-semibold text-gold-600" data-count={stat.value} data-suffix={stat.suffix}>
+              <dd class="font-sans text-6xl font-semibold text-gold-600" data-count={stat.value} data-suffix={stat.suffix}>
                 {stat.value}
                 {stat.suffix}
               </dd>
@@ -60,7 +60,7 @@ import SectionHeading from '../ui/SectionHeading.astro';
         <ul class="grid gap-8 border-t border-paddy-900/15 pt-12 md:grid-cols-3" data-stagger>
           {pillars.map((pillar, i) => (
             <li class="flex gap-5">
-              <span class="font-serif text-5xl font-semibold leading-none text-gold-500">0{i + 1}</span>
+              <span class="font-sans text-5xl font-semibold leading-none text-gold-500">0{i + 1}</span>
               <div>
                 <h3 class="text-lg font-semibold text-paddy-900">{pillar.title}</h3>
                 <p class="mt-1 text-ink/70">{pillar.text}</p>

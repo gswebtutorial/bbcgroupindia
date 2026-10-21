@@ -9,7 +9,7 @@ export const heroSlides = [
     image: heroPaddy,
     eyebrow: 'BBC Group India',
     title: ['Building Businesses.', 'Creating Value.', 'Growing Together.'],
-    text: 'BBC Group India is a diversified business group with a growing presence across agriculture, rice processing, renewable energy, brick manufacturing, building construction supplies and agricultural machinery.',
+    text: 'BBC Group India is a diversified business group with a growing presence across agriculture, rice processing, renewable energy, brick manufacturing and agricultural machinery.',
     primary: { label: 'Explore Our Businesses', href: '/businesses' },
     secondary: { label: 'Know About BBC Group', href: '/about' },
   },

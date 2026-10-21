@@ -47,9 +47,13 @@ const { contact } = site;
             </span>
             <div>
               <p class="text-sm font-semibold uppercase tracking-widest text-gold-600">Phone</p>
-              <a href={contact.phoneHref} class="link-draw mt-1 inline-block text-lg font-semibold text-paddy-900">
-                {contact.phoneDisplay}
-              </a>
+              {
+                contact.phones.map((phone) => (
+                  <a href={phone.href} class="link-draw mt-1 block w-fit text-lg font-semibold text-paddy-900">
+                    {phone.display}
+                  </a>
+                ))
+              }
             </div>
           </li>
           <li class="flex gap-5">

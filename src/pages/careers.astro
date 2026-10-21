@@ -73,8 +73,8 @@ const experience = ['Fresher', '1 to 3 years', '3 to 5 years', 'More than 5 year
         <SectionHeading eyebrow="Life at BBC Group India" title="Discover Your Potential in a Growing Group" />
         <div class="mt-8 space-y-5 text-lg leading-relaxed text-ink/80" data-stagger>
           <p>
-            BBC Group India works across agriculture, rice processing, renewable energy, brick manufacturing,
-            building construction supplies and agricultural machinery. That range means real variety in the work
+            BBC Group India works across agriculture, rice processing, renewable energy, brick manufacturing
+            and agricultural machinery. That range means real variety in the work
             and room to grow.
           </p>
           <p>
@@ -125,12 +125,16 @@ const experience = ['Fresher', '1 to 3 years', '3 to 5 years', 'More than 5 year
           Fill in the form and our team will contact you. There is no account to create and nothing to log in to.
         </p>
         <ul class="mt-8 space-y-4" data-stagger>
-          <li>
-            <a href={site.contact.phoneHref} class="flex items-center gap-3 font-semibold text-paddy-900 hover:text-gold-600">
-              <Icon name="phone" class="size-5 text-gold-600" />
-              {site.contact.phoneDisplay}
-            </a>
-          </li>
+          {
+            site.contact.phones.map((phone) => (
+              <li>
+                <a href={phone.href} class="flex items-center gap-3 font-semibold text-paddy-900 hover:text-gold-600">
+                  <Icon name="phone" class="size-5 text-gold-600" />
+                  {phone.display}
+                </a>
+              </li>
+            ))
+          }
           <li>
             <a
               href={`mailto:${site.contact.email}`}

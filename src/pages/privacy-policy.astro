@@ -58,7 +58,7 @@ const updated = '7 October 2026';
         <h2>Contact</h2>
         <p>
           {site.contact.person}, {site.name}<br />
-          {site.contact.phoneDisplay}<br />
+          {site.contact.phones.map((phone) => phone.display).join(', ')}<br />
           {site.contact.email}
         </p>
       </div>

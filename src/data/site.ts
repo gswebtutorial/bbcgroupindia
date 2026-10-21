@@ -4,10 +4,17 @@ export const site = {
   name: 'BBC Group India',
   tagline: 'Building Businesses. Creating Value. Growing Together.',
   description:
-    'BBC Group India is a diversified business group with a growing presence across agriculture, rice processing, renewable energy, brick manufacturing, building construction supplies and agricultural machinery.',
+    'BBC Group India is a diversified business group with a growing presence across agriculture, rice processing, renewable energy, brick manufacturing and agricultural machinery.',
 
   contact: {
     person: 'Aayush Singh',
+    // All contact numbers. The first is the main number, used where there is room for only one
+    // (top bar, floating call button, gold contact band).
+    phones: [
+      { display: '+91 73850 20542', href: 'tel:+917385020542' },
+      { display: '+91 88218 43995', href: 'tel:+918821843995' },
+      { display: '+91 99269 06480', href: 'tel:+919926906480' },
+    ],
     phoneDisplay: '+91 73850 20542',
     phoneHref: 'tel:+917385020542',
     email: 'bbcriceindustries@gmail.com',

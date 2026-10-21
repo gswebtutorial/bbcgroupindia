@@ -19,12 +19,16 @@ export type Business = {
   whatWeDo: { icon: IconName; title: string; text: string }[];
   /** Ordered processing steps, shown as an animated flow */
   process?: { title: string; text: string }[];
+  /** Plant or unit addresses, shown with a map link */
+  locations?: { name: string; address: string; mapUrl: string }[];
+  /** false hides the business everywhere (nav, footer, grids, forms) and removes its page */
+  enabled?: boolean;
 };
 
 // `summary` is the client's approved copy. `tagline`, `overview`, `whatWeDo` and `process`
 // are our drafts, kept general on purpose. Add capacities, locations, product lists and
 // certifications here as the client confirms them.
-export const businesses: Business[] = [
+export const allBusinesses: Business[] = [
   {
     slug: 'agriculture',
     image: agriculture,
@@ -87,6 +91,19 @@ export const businesses: Business[] = [
         icon: 'globe',
         title: 'Domestic and Export Supply',
         text: 'Rice supplied to buyers across India and to international markets.',
+      },
+    ],
+    locations: [
+      {
+        name: 'Unit 1',
+        address: 'Salhebharri, Khairagarh, Chhattisgarh 491881',
+        mapUrl: 'https://share.google/V0BkNMnepm5GjZHrw',
+      },
+      {
+        name: 'Unit 2',
+        address: 'Chikhaldah, Khairagarh, Chhattisgarh 491881',
+        // No Google listing for this unit yet, so this searches for the village
+        mapUrl: 'https://www.google.com/maps/search/?api=1&query=Chikhaldah%2C+Khairagarh%2C+Chhattisgarh+491881',
       },
     ],
     process: [
@@ -159,6 +176,10 @@ export const businesses: Business[] = [
   },
   {
     slug: 'construction-supplies',
+    // Hidden on client request, 21 Oct 2026, until after the expo at their plant.
+    // To bring it back: delete this line, and restore the phrase in the copy listed in
+    // docs/WEBSITE-BUILD-GUIDE.md section 14.
+    enabled: false,
     image: construction,
     title: 'Building Construction Supplies',
     summary:
@@ -190,27 +211,40 @@ export const businesses: Business[] = [
   {
     slug: 'agricultural-machinery',
     image: machinery,
-    title: 'Agricultural Machinery',
+    title: 'Agricultural Equipment & Technology',
+    // Client instruction, 21 Oct 2026: do not name any equipment brand, and do not lead with tractors
     summary:
-      'BBC Group India is an authorized dealer of Kubota, a Japanese technology-based tractor company, providing reliable agricultural machinery and tractor solutions to farmers and agricultural customers.',
-    cta: 'Explore Agricultural Machinery',
-    tagline: 'Authorized Kubota dealer. Reliable machinery for the farm.',
+      'BBC Group India deals in agricultural equipment and technologies that provide end-to-end farming solutions, helping farmers and agricultural customers work more efficiently from land preparation to harvest.',
+    cta: 'Explore Agricultural Equipment',
+    tagline: 'End-to-end farming solutions, from land preparation to harvest.',
     overview: [
-      'Mechanisation helps farmers do more with their land and their time. We bring Japanese-technology tractors and agricultural machinery to farmers and agricultural customers.',
-      'We aim to help every customer find the right machine for their land, their crops and their budget.',
+      'Modern farming needs more than a single machine. We bring together the equipment and technologies farmers need across the whole crop cycle.',
+      'We aim to help every customer find the right solution for their land, their crops and their budget.',
     ],
     whatWeDo: [
-      { icon: 'award', title: 'Kubota Tractors', text: 'Authorized dealership for Kubota tractors.' },
       {
         icon: 'factory',
-        title: 'Agricultural Machinery',
-        text: 'Reliable machinery and tractor solutions for modern farming.',
+        title: 'Farm Equipment',
+        text: 'Equipment for every stage of farming, from land preparation and sowing to crop care and harvest.',
+      },
+      {
+        icon: 'trending-up',
+        title: 'Modern Farm Technologies',
+        text: 'Technologies that help farmers work more precisely, save time and get more from every acre.',
+      },
+      {
+        icon: 'layers',
+        title: 'End-to-End Solutions',
+        text: 'One partner from the first field operation to the last, so farmers do not have to piece solutions together.',
       },
       {
         icon: 'users',
         title: 'Support for Farmers',
-        text: 'Guidance for farmers and agricultural customers in choosing the right equipment.',
+        text: 'Guidance in choosing the right equipment for the land, the crop and the budget.',
       },
     ],
   },
 ];
+
+// Every page and component uses this list, so a disabled business disappears from the whole site
+export const businesses = allBusinesses.filter((business) => business.enabled !== false);

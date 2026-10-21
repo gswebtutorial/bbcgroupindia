@@ -46,12 +46,16 @@ const others = [1, 2, 3].map((offset) => businesses[(index + offset) % businesse
         <p class="mt-2 text-ink/70">Speak to us about your requirement.</p>
         <ul class="mt-6 space-y-4 text-sm">
           <li class="font-semibold text-paddy-900">{site.contact.person}</li>
-          <li>
-            <a href={site.contact.phoneHref} class="flex items-center gap-3 hover:text-gold-600">
-              <Icon name="phone" class="size-4 text-gold-600" />
-              {site.contact.phoneDisplay}
-            </a>
-          </li>
+          {
+            site.contact.phones.map((phone) => (
+              <li>
+                <a href={phone.href} class="flex items-center gap-3 hover:text-gold-600">
+                  <Icon name="phone" class="size-4 text-gold-600" />
+                  {phone.display}
+                </a>
+              </li>
+            ))
+          }
           <li>
             <a href={`mailto:${site.contact.email}`} class="flex items-center gap-3 break-all hover:text-gold-600">
               <Icon name="mail" class="size-4 shrink-0 text-gold-600" />
@@ -98,6 +102,38 @@ const others = [1, 2, 3].map((offset) => businesses[(index + offset) % businesse
           <div class="mt-14">
             <ProcessFlow steps={business.process} />
           </div>
+        </div>
+      </section>
+    )
+  }
+
+  {
+    business.locations && (
+      <section class="bg-ivory py-20 lg:py-28">
+        <div class="container-site">
+          <SectionHeading eyebrow="Factory addresses" title="Our Units" />
+          <ul class="mt-12 grid gap-6 md:grid-cols-2" data-stagger>
+            {business.locations.map((location) => (
+              <li class="flex gap-5 rounded border-t-2 border-gold-500 bg-white p-8">
+                <span class="grid size-12 shrink-0 place-items-center rounded-full bg-ivory text-gold-600">
+                  <Icon name="map-pin" />
+                </span>
+                <div>
+                  <h3 class="text-xl font-semibold text-paddy-900">{location.name}</h3>
+                  <p class="mt-2 text-lg leading-relaxed text-ink/75">{location.address}</p>
+                  <a
+                    href={location.mapUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-gold-600 hover:text-paddy-900"
+                  >
+                    View on Google Maps
+                    <Icon name="arrow-right" class="size-4" />
+                  </a>
+                </div>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
     )
