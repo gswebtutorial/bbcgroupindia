@@ -1,6 +1,7 @@
 ---
 import banner from '../assets/images/contact-silos-trucks.jpg';
 import EnquiryForm from '../components/forms/EnquiryForm.astro';
+import Button from '../components/ui/Button.astro';
 import Icon from '../components/ui/Icon.astro';
 import PageBanner from '../components/ui/PageBanner.astro';
 import SectionHeading from '../components/ui/SectionHeading.astro';
@@ -20,7 +21,9 @@ const { contact } = site;
     text="We would like to hear from you."
     image={banner}
     crumbs={[{ label: 'Contact Us' }]}
-  />
+  >
+    <Button href={contact.enquiryFormUrl} newTab>Open Form</Button>
+  </PageBanner>
 
   <section class="py-20 lg:py-28">
     <div class="container-site grid gap-12 lg:grid-cols-[1fr_1.2fr] lg:gap-20">

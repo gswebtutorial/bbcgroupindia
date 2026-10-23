@@ -22,6 +22,9 @@ export const site = {
     whatsappEnabled: false,
     whatsappHref: 'https://wa.me/917385020542',
     mapsUrl: 'https://share.google/N030ydPlvanEKhMqx',
+    // Client's Google Form, linked from the "Enquiry Here" button on the Contact page
+    enquiryFormUrl:
+      'https://docs.google.com/forms/d/e/1FAIpQLSdio57eDM08D-WCbX59U0yq7EBaBBrU22OB8ZXLluG0Rc2fzQ/viewform',
     // Keyless Google Maps embed that searches for the business listing. Replace with the
     // iframe src from Google Maps > Share > Embed a map once the client confirms the pin.
     mapEmbedUrl:

@@ -64,6 +64,14 @@ const { title, text, image, crumbs = [] } = Astro.props;
         </p>
       )
     }
+    {/* optional buttons below the tagline */}
+    {
+      Astro.slots.has('default') && (
+        <div class="mt-8 flex flex-wrap gap-4" data-reveal data-reveal-delay="0.3">
+          <slot />
+        </div>
+      )
+    }
    </div>
   </div>
 </section>
